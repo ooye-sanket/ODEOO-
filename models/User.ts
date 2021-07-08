@@ -1,37 +1,54 @@
-import { Schema, model, models } from 'mongoose';
+import { Document, Schema, model, models } from 'mongoose';
 import { Event, Genre, Role } from '../@types';
 
-interface UserI {
-	fullName: String;
-	username: String;
-	email: String;
-	phone: String;
-	dateOfBirth: Date;
-	address: String;
-	aadhar: String;
-	contentToDisplay: [
-		{ _id: Number; title: String; description: String; mediaUrl: String }
-	];
-	youtubeLinks: [String];
+export interface IUser extends Document {
+	fullName: string;
+	username: string;
+	email: string;
+	phone: string;
+	dateOfBirth: string;
+	address: string;
+	aadhar: string;
+	imageUrl: string;
+	contentToDisplay: ContentToDisplay[];
+	youtubeLinks: string[];
 	role: Role;
 	meta: {
-		genre: [Genre];
-		events: [Event];
+		genre: Genre[];
+		events: Event[];
 	};
 }
 
-const userSchema = new Schema<UserI>(
+interface ContentToDisplay {
+	_id: Number;
+	title: string;
+	description: string;
+	mediaUrl: string;
+}
+
+const UserSchema = new Schema(
 	{
 		fullName: String,
 		username: String,
 		email: String,
 		phone: String,
-		dateOfBirth: Date,
+		password: String,
+		dateOfBirth: String,
 		address: String,
 		aadhar: String,
 		imageUrl: String,
 		contentToDisplay: [
-			{ _id: Number, title: String, description: String, mediaUrl: String },
+			{
+				_id: {
+					type: Schema.Types.ObjectId,
+					index: true,
+					required: true,
+					auto: true,
+				},
+				title: String,
+				description: String,
+				mediaUrl: String,
+			},
 		],
 		youtubeLinks: [String],
 		role: {
@@ -39,16 +56,22 @@ const userSchema = new Schema<UserI>(
 			enum: Object.values(Role),
 			required: true,
 			default: Role.UnverifiedArtist,
+			auto: true,
 		},
 		meta: {
-			genre: { type: String, enum: Object.values(Genre) },
-			events: { type: String, enum: Object.values(Event) },
+			genre: { type: [String], enum: Object.values(Genre) },
+			events: { type: [String], enum: Object.values(Event) },
 		},
 	},
 	{ timestamps: true }
 );
 
-export const User = models['User'] || model<UserI>('User', userSchema);
+// UserSchema.pre('save', function save(next) {
+// 	const user = this;
+// 	if (!user.isModified('password')) return next();
+// });
+
+export const User = models['User'] || model('User', UserSchema);
 
 /*
   id

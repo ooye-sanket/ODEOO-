@@ -5,15 +5,15 @@ import cors from '../../middleware/cors';
 import jwt from 'jsonwebtoken';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	if (!req.body) {
-		res.statusCode = 404;
-		res.end('Error');
-		return;
-	}
 	await runMiddleware(req, res, cors);
 
 	switch (req.method) {
 		case 'POST':
+			if (!req.body) {
+				res.statusCode = 404;
+				res.end('Error');
+				return;
+			}
 			const { username, password } = req.body;
 			res.json({
 				token: jwt.sign(
