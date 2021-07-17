@@ -9,7 +9,7 @@ export interface IUser extends Document {
 	dateOfBirth: string;
 	address: string;
 	aadhar: string;
-	imageUrl: string;
+	imgUrl: string;
 	contentToDisplay: ContentToDisplay[];
 	youtubeLinks: string[];
 	role: Role;
@@ -36,7 +36,7 @@ const UserSchema = new Schema(
 		dateOfBirth: String,
 		address: String,
 		aadhar: String,
-		imageUrl: String,
+		imgUrl: String,
 		contentToDisplay: [
 			{
 				_id: {

@@ -66,39 +66,43 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					.status(400)
 					.json({ error: 'Aadhar Number already registered' });
 
-			try {
-				const hashedPwd = await bcrypt.hash(password, 12);
-				const newUsr = new User({
-					fullName,
-					username,
-					email,
-					phone,
-					password: hashedPwd,
-					dateOfBirth,
-					address,
-					imageUrl,
-					contentToDisplay,
-					meta,
-				});
-
-				const createdUsr = await newUsr.save();
-
-				if (createdUsr)
-					return res.status(200).json({
-						message: 'User signed up successfully!',
+			if (!unameExists && !emailExists && !phoneExists && !aadharExists) {
+				try {
+					const hashedPwd = await bcrypt.hash(password, 12);
+					const newUsr = new User({
+						fullName,
 						username,
 						email,
 						phone,
-						token: jwt.sign(
-							{ user: createdUsr },
-							// @ts-ignore
-							process.env.JWT_SECRET,
-							{ expiresIn: '15d' }
-						),
+						password: hashedPwd,
+						dateOfBirth,
+						address,
+						imageUrl,
+						contentToDisplay,
+						meta,
 					});
-			} catch (err) {
-				console.error('SignUp Error:', err);
-				return res.status(500).json({ error: 'Something went wrong' });
+
+					const createdUsr = await newUsr.save();
+
+					if (createdUsr)
+						return res.status(200).json({
+							msg: 'User signed up successfully',
+							data: {
+								username,
+								email,
+								phone,
+							},
+							token: jwt.sign(
+								{ user: createdUsr },
+								// @ts-ignore
+								process.env.JWT_SECRET,
+								{ expiresIn: '15d' }
+							),
+						});
+				} catch (err) {
+					console.error('SignUp Error:', err);
+					return res.status(500).json({ error: 'Something went wrong' });
+				}
 			}
 			break;
 		// CheckEmail.then()
