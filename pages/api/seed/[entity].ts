@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import runMiddleware from '../../../lib/runMiddleware';
+import runMiddleware from '../../../utils/runMiddleware';
 import connectDB from '../../../middleware/connectDB';
 import cors from '../../../middleware/cors';
 import { UserSeed } from '../../../seeders';

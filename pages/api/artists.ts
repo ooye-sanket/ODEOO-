@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import runMiddleware from '../../lib/runMiddleware';
+import connectDB from '../../middleware/connectDB';
+import runMiddleware from '../../utils/runMiddleware';
 import cors from '../../middleware/cors';
-import { User, IUser } from '../../models';
+import { User } from '../../models';
+import authenticate from '../../middleware/authenicate';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
@@ -28,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					.json({ msg: 'Artists fetched successfully', data: artists });
 			} catch (err) {
 				console.error('Artists Error:', err);
-				return res.status(500).json({ error: 'Something went wrong' });
+				return res.status(500).json({ msg: 'Something went wrong' });
 			}
 
 			// .select('name')
@@ -45,4 +47,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default handler;
+export default connectDB(handler);

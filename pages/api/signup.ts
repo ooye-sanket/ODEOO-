@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import runMiddleware from '../../lib/runMiddleware';
+import runMiddleware from '../../utils/runMiddleware';
 import connectDB from '../../middleware/connectDB';
 import cors from '../../middleware/cors';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import { sign } from 'jsonwebtoken';
+import { hash } from 'bcrypt';
 import { User, IUser } from '../../models';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	switch (req.method) {
 		case 'POST':
-			if (!req.body) return res.status(400).json({ error: 'Request Invalid' });
+			if (!req.body) return res.status(400).json({ msg: 'Request Invalid' });
 
 			const {
 				fullName,
@@ -43,10 +43,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			)
 				return res
 					.status(400)
-					.json({ error: 'Please enter all the required fields' });
+					.json({ msg: 'Please enter all the required fields' });
 
 			if (password !== confirmPassword)
-				return res.status(400).json({ error: "Passwords don't match" });
+				return res.status(400).json({ msg: "Passwords don't match" });
 
 			const unameExists = await User.findOne({ username });
 			const emailExists = await User.findOne({ email });
@@ -54,21 +54,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			const aadharExists = await User.findOne({ aadhar });
 
 			if (unameExists)
-				return res.status(400).json({ error: 'Username already exists' });
+				return res.status(400).json({ msg: 'Username already exists' });
 			if (emailExists)
-				return res.status(400).json({ error: 'Email already registered' });
+				return res.status(400).json({ msg: 'Email already registered' });
 			if (phoneExists)
-				return res
-					.status(400)
-					.json({ error: 'Phone Number already registered' });
+				return res.status(400).json({ msg: 'Phone Number already registered' });
 			if (aadharExists)
 				return res
 					.status(400)
-					.json({ error: 'Aadhar Number already registered' });
+					.json({ msg: 'Aadhar Number already registered' });
 
 			if (!unameExists && !emailExists && !phoneExists && !aadharExists) {
 				try {
-					const hashedPwd = await bcrypt.hash(password, 12);
+					const hashedPwd = await hash(password, 12);
 					const newUsr = new User({
 						fullName,
 						username,
@@ -83,8 +81,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					});
 
 					const createdUsr = await newUsr.save();
-
-					if (createdUsr)
+					if (createdUsr) {
+						const token = sign(
+							{ user: createdUsr.id },
+							// @ts-ignore
+							process.env.JWT_SECRET,
+							{ expiresIn: '15d' }
+						);
 						return res.status(200).json({
 							msg: 'User signed up successfully',
 							data: {
@@ -92,26 +95,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 								email,
 								phone,
 							},
-							token: jwt.sign(
-								{ user: createdUsr },
-								// @ts-ignore
-								process.env.JWT_SECRET,
-								{ expiresIn: '15d' }
-							),
+							token,
 						});
+					}
 				} catch (err) {
 					console.error('SignUp Error:', err);
-					return res.status(500).json({ error: 'Something went wrong' });
+					return res.status(500).json({ msg: 'Something went wrong' });
 				}
 			}
 			break;
-		// CheckEmail.then()
-		// CheckPhone,then()
-		// CheckUname,then()
-		// CheckAadhar.then()
-
-		// HashPwd.then(newUsr).then(saveuser)
-
 		default:
 			return res.status(405).end('Method Not Allowed'); //Method Not Allowed
 	}
