@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../middleware/connectDB';
 import cors from '../../middleware/cors';
-import runMiddleware from '../../utils/runMiddleware';
 import { User } from '../../models/User';
+import runMiddleware from '../../utils/runMiddleware';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);

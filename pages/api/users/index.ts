@@ -1,8 +1,9 @@
+import { sign, verify } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import runMiddleware from '../../../utils/runMiddleware';
 import cors from '../../../middleware/cors';
 import { User } from '../../../models';
-import { verify, sign } from 'jsonwebtoken';
+import runMiddleware from '../../../utils/runMiddleware';
+import connectDB from '../../../middleware/connectDB';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
@@ -66,4 +67,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default handler;
+export default connectDB(handler);

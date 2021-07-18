@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../middleware/connectDB';
-import runMiddleware from '../../utils/runMiddleware';
 import cors from '../../middleware/cors';
 import { User } from '../../models';
-import authenticate from '../../middleware/authenicate';
+import runMiddleware from '../../utils/runMiddleware';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
