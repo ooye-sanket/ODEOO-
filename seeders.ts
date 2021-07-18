@@ -1,5 +1,5 @@
 import { Role } from './@types';
-import { User, UserI } from './models';
+import { User, IUser } from './models';
 
 export const UserSeed = async () => {
 	// for (const user of users) {
