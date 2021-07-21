@@ -1,0 +1,42 @@
+@import './variables';
+
+// :root {
+// 	--dark: #1f1c19;
+// 	--dark-but-lighter: #5d544b;
+// 	--light-but-darker: #eae8ee;
+// 	--light: #f7f6f8;
+// 	--accent: #4c4dbd;
+// 	--main-fnt: 'Raleway', system-ui, -apple-system, 'Segoe UI', Roboto,
+// 		'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif,
+// 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+// 	--border-radius: 0.6em;
+// }
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+	// font-family: var(--main-fnt);
+	// background: var(--light-but-darker);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 900;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+@import './bootstrap';
+@import './components';

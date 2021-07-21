@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					);
 					compare(password, usr.password, (err: any, obj: any) => {
 						if (!err && obj) {
-							const { fullName, username } = usr;
+							const { firstName, lastName, username } = usr;
 							const token = jwt.sign(
 								{
 									user: usr.id,
@@ -43,9 +43,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 								.status(200)
 								.setHeader('Authorization', 'Bearer ' + token)
 								.json({
-									msg: 'User signed in successfully',
+									msg: 'User logged in successfully',
 									data: {
-										fullName,
+										firstName,
+										lastName,
 										username,
 										email: usr.email,
 										phone: usr.phone,

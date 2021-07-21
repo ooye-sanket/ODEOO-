@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							const usr = await User.findOne({ id }).select(
 								'-password -dateOfBirth -address -phone -__v'
 							);
-							const { fullName, username } = usr;
+							const { firstName, lastName, username } = usr;
 							const token = sign(
 								{
 									user: usr.id,
@@ -38,7 +38,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 								.json({
 									msg: 'User signed in successfully',
 									data: {
-										fullName,
+										firstName,
+										lastName,
 										username,
 										email: usr.email,
 										phone: usr.phone,

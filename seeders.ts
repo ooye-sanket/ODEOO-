@@ -20,7 +20,8 @@ export const UserSeed = async () => {
 };
 
 const user1 = {
-	fullName: 'John Doe',
+	firstName: 'John',
+	lastName: 'Doe',
 	username: 'johndoe',
 	email: 'abc@xyz.com',
 	phone: '+919876543210',

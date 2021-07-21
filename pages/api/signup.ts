@@ -14,7 +14,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			if (!req.body) return res.status(400).json({ msg: 'Request Invalid' });
 
 			const {
-				fullName,
+				firstName,
+				lastName,
 				username,
 				email,
 				phone,
@@ -29,7 +30,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			} = req.body;
 
 			if (
-				!fullName ||
+				!firstName ||
+				!lastName ||
 				!username ||
 				!email ||
 				!phone ||
@@ -68,7 +70,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				try {
 					const hashedPwd = await hash(password, 12);
 					const newUsr = new User({
-						fullName,
+						firstName,
+						lastName,
 						username,
 						email,
 						phone,

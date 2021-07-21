@@ -21,7 +21,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			try {
 				const artists = await User.find({
 					role: 'VERIFIED_ARTIST',
-					$or: [{ fullName: { $regex: q } }, { username: { $regex: q } }],
+					$or: [
+						{ firstName: { $regex: q } },
+						{ lastName: { $regex: q } },
+						{ username: { $regex: q } },
+					],
 				}).select('-password -dateOfBirth -address -phone -__v');
 
 				return res

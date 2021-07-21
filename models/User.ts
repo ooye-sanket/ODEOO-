@@ -2,7 +2,8 @@ import { Document, Schema, model, models } from 'mongoose';
 import { Event, Genre, Role } from '../@types';
 
 export interface IUser extends Document {
-	fullName: string;
+	firstName: string;
+	lastName: string;
 	username: string;
 	email: string;
 	phone: string;
@@ -28,7 +29,8 @@ interface ContentToDisplay {
 
 const UserSchema = new Schema(
 	{
-		fullName: String,
+		firstName: String,
+		lastName: String,
 		username: String,
 		email: String,
 		phone: String,

@@ -69,7 +69,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/login.jsx"  ],
+, "Context.jsx"  ],
   "exclude": [
     "node_modules"
   ]
