@@ -10,7 +10,6 @@ import {
 	Spinner,
 } from 'react-bootstrap';
 import Context from '../Context';
-import { LoginModal } from './LoginModal';
 
 export const NavBar = () => {
 	const { loading, user, loginShow, setLoginShow } = useContext(Context);
@@ -106,7 +105,6 @@ export const NavBar = () => {
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>
-			<LoginModal show={loginShow} onHide={() => setLoginShow(false)} />
 		</>
 	);
 };

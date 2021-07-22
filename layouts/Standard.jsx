@@ -1,9 +1,10 @@
-import { NavBar } from '../components';
+import { Login, NavBar } from '../components';
 
 const Standard = ({ children }) => {
 	return (
 		<>
 			<NavBar />
+			<Login />
 			{children}
 		</>
 	);
