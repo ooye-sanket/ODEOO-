@@ -19,7 +19,7 @@ export const NavBar = () => {
 			<Navbar
 				collapseOnSelect
 				expand="lg"
-				fixed="top"
+				// fixed="top"
 				bg="light"
 				variant="light"
 			>

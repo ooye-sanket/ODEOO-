@@ -5,12 +5,6 @@ $border-radius: 1.2em;
 $border-radius-lg: 1.2em;
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
-:root {
-	--bs-font-sans-serif: 'Raleway', system-ui, -apple-system, 'Segoe UI', Roboto,
-		'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif,
-		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
 body {
 	font-weight: 500;
 }

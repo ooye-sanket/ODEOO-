@@ -31,7 +31,7 @@ const layouts = {
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const Layout =
     //@ts-ignore
-    layouts[Component.layout] || (({ children }) => <>{children}</>);
+    layouts[Component.layout] || (({ children }) => <Provider>{children}</Provider>);
 
   return (
     <Provider>

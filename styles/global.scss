@@ -12,6 +12,15 @@
 // 	--border-radius: 0.6em;
 // }
 
+:root {
+	--primary: #4c4dbd;
+	--secondary: #ff7c1a;
+	--dark: #1f1c19;
+	--bs-font-sans-serif: 'Raleway', system-ui, -apple-system, 'Segoe UI', Roboto,
+		'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif,
+		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
 html,
 body {
 	padding: 0;
@@ -40,3 +49,4 @@ a {
 
 @import './bootstrap';
 @import './components';
+@import './pages';

@@ -6,6 +6,8 @@ import { useContext } from 'react';
 import { Offcanvas, Button, Form, Modal } from 'react-bootstrap';
 import * as Yup from 'yup';
 import Context from '../Context';
+import BsFormik from '../components/BsFormik';
+import Image from 'next/image';
 
 export const Login = () => {
 	const { loginShow, setLoginShow } = useContext(Context);
@@ -45,59 +47,36 @@ export const Login = () => {
 				<Offcanvas.Header closeButton>
 					<Offcanvas.Title>Artist Login</Offcanvas.Title>
 				</Offcanvas.Header>
-				<Offcanvas.Body>
+				<Offcanvas.Body className="position-relative">
+					<div className="text-center">
+						<Image src="/launch.svg" alt="" width="220" height="220" />
+					</div>
 					<Formik
 						initialValues={initialValues}
 						validationSchema={validationSchema}
 						onSubmit={login}
-						validateOnBlur
 					>
 						{({ values, errors, touched, isSubmitting }) => (
 							<FormikForm>
 								<Form.Group className="mb-3">
-									<Form.Label>Email</Form.Label>
-									<Field
+									<BsFormik
 										name="email"
-										type="email"
-										placeholder="Email Address"
-										className={
-											'form-control' +
-											(errors.email && touched.email ? ' is-invalid' : '')
-										}
-									/>
-									<ErrorMessage
-										name="email"
-										component="small"
-										className="invalid-feedback"
+										label="Email"
+										isInvalid={errors.email && touched.email}
 									/>
 								</Form.Group>
 
 								<Form.Group className="mb-3">
-									<Form.Label>Password</Form.Label>
-									<Field
+									<BsFormik
 										name="password"
-										type="password"
-										placeholder="Password"
-										className={
-											'form-control' +
-											(errors.password && touched.password ? ' is-invalid' : '')
-										}
-									/>
-									<ErrorMessage
-										name="password"
-										component="small"
-										className="invalid-feedback"
+										label="Password"
+										isInvalid={errors.password && touched.password}
 									/>
 								</Form.Group>
-								<Button
-									variant="success"
-									type="submit"
-									disanled={!isSubmitting}
-								>
+								<Button variant="success" type="submit" disabled={isSubmitting}>
 									Submit
 								</Button>
-								{'   '}
-								<small>
+								<small className="ms-2">
 									New to Odeo.in?{' '}
 									<Link href="/signup">
 										<a>SignUp</a>
@@ -106,6 +85,11 @@ export const Login = () => {
 							</FormikForm>
 						)}
 					</Formik>
+					<Link href="/password-reset">
+						<a className="d-block mt-3">
+							<small>Forgot password?</small>
+						</a>
+					</Link>
 				</Offcanvas.Body>
 			</Offcanvas>
 		</>
