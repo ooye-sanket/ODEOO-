@@ -4,7 +4,8 @@
 #hero-section {
 	height: calc(100vh - 76px);
 	img {
-		max-width: 80em;
+		max-height: calc(100vh / 2);
+		max-width: 42em;
 	}
 }
 
