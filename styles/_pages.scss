@@ -1,5 +1,13 @@
 @import './variables';
 
+// /
+#hero-section {
+	height: calc(100vh - 76px);
+	img {
+		max-width: 80em;
+	}
+}
+
 // /register
 #signup {
 	height: 100vh;
