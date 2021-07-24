@@ -43,7 +43,7 @@ const Register = () => {
          .min(8, 'Password is too short - should be 8 chars minimum.'),
    });
 
-   const signup = (values) => {
+   const signup = (values: any) => {
       const { email, password } = values;
       console.log('Login');
       Axios.post('/signup', { email, password })
