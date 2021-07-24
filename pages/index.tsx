@@ -15,7 +15,7 @@ const Home = () => {
 					</Col>
 					<Col xs={{ span: 12, order: 'first' }} lg='6'>
 						<div className="text-center">
-							<img src='/rock-band.svg' alt='' />
+							<Image width='640' height='400' src='/rock-band.svg' alt='' />
 						</div>
 					</Col>
 				</Row>

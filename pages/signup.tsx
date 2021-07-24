@@ -63,10 +63,10 @@ const Register = () => {
             <Col xs sm={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
                <Card className='mt-4'>
                   <Card.Header>
-                     <img
+                     <Image
                         src="/logo.png"
                         height="50"
-                        width='auto'
+                        width='34.5'
                         className="d-inline-block align-top"
                         alt="React Bootstrap logo"
                      />
