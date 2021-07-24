@@ -25,10 +25,9 @@ export const NavBar = () => {
 			>
 				<Container>
 					<Navbar.Brand href="#home">
-						<Image
+						<img
 							src="/logo.png"
 							height="50"
-							width="34.5"
 							className="d-inline-block align-top"
 							alt="React Bootstrap logo"
 						/>
