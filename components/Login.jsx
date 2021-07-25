@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { Offcanvas, Button, Form, Modal } from 'react-bootstrap';
 import * as Yup from 'yup';
 import Context from '../Context';
-import BsFormik from '../components/BsFormik';
+import { BsFormik } from '../components';
 import Image from 'next/image';
 
 export const Login = () => {
@@ -49,7 +49,7 @@ export const Login = () => {
 				</Offcanvas.Header>
 				<Offcanvas.Body className="position-relative">
 					<div className="text-center">
-						<Image src="/launch.svg" alt="" width="220" height="220" />
+						<Image src="/launch.svg" alt="" width="200" height="200" />
 					</div>
 					<Formik
 						initialValues={initialValues}

@@ -26,9 +26,9 @@ export const NavBar = () => {
 				<Container>
 					<Navbar.Brand href="#home">
 						<img
-							src="/logo.png"
-							height="50"
-							className="d-inline-block align-top"
+							src="/odeo-logo-full.png"
+							height="48"
+							className="d-inline-block align-middle"
 							alt="React Bootstrap logo"
 						/>
 					</Navbar.Brand>

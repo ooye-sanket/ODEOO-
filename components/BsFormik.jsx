@@ -2,7 +2,7 @@ import { Field, ErrorMessage } from 'formik';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import moment from 'moment';
 
-const BsFormik = (props) => {
+export const BsFormik = (props) => {
 	const { control, ...rest } = props;
 	switch (control) {
 		default:
@@ -39,5 +39,3 @@ const Input = ({ label, name, error, ...rest }) => {
 		</>
 	);
 };
-
-export default BsFormik;

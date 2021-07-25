@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap'
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import * as Yup from 'yup';
-import BsFormik from '../components/BsFormik'
+import { BsFormik } from '../components'
 
 const Register = () => {
 

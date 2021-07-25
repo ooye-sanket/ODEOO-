@@ -1,1 +1,37 @@
 @import './variables';
+
+.section-title {
+	text-align: center;
+	margin-bottom: 1em;
+	h1,
+	h2,
+	h3 {
+		position: relative;
+		padding-bottom: 0.6em;
+		font-weight: 700;
+		&::before {
+			content: '';
+			position: absolute;
+			display: block;
+			width: 120px;
+			height: 1px;
+			background: #ddd;
+			bottom: 1px;
+			left: calc(50% - 60px);
+		}
+		&::after {
+			content: '';
+			position: absolute;
+			display: block;
+			width: 40px;
+			height: 3px;
+			background: var(--primary);
+			bottom: 0;
+			left: calc(50% - 20px);
+		}
+	}
+}
+
+.artist-card {
+	max-width: 16rem;
+}
