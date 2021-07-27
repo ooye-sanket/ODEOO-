@@ -1,9 +1,10 @@
 $primary: #4c4dbd;
 $secondary: #ff7c1a;
 $dark: #1f1c19;
+$border-radius-sm: 1.2em;
 $border-radius: 1.2em;
 $border-radius-lg: 1.2em;
-@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 body {
 	font-weight: 500;

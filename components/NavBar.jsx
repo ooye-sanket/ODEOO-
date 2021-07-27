@@ -10,6 +10,7 @@ import {
 	Spinner,
 } from 'react-bootstrap';
 import Context from '../Context';
+import { BoxArrowInRight } from 'react-bootstrap-icons';
 
 export const NavBar = () => {
 	const { loading, user, loginShow, setLoginShow } = useContext(Context);
@@ -19,14 +20,14 @@ export const NavBar = () => {
 			<Navbar
 				collapseOnSelect
 				expand="lg"
-				// fixed="top"
+				sticky="top"
 				bg="light"
 				variant="light"
 			>
 				<Container>
 					<Navbar.Brand href="#home">
 						<img
-							src="/odeo-logo-full.png"
+							src="/odeo-logo.png"
 							height="48"
 							className="d-inline-block align-middle"
 							alt="React Bootstrap logo"
@@ -34,8 +35,8 @@ export const NavBar = () => {
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-					<Navbar.Collapse className="px-lg-4">
-						<Nav as="ul" className="mx-auto">
+					<Navbar.Collapse>
+						<Nav as="ul" className="ms-auto">
 							<Nav.Item as="li">
 								<Nav.Link href="/home">Home</Nav.Link>
 							</Nav.Item>
@@ -43,11 +44,13 @@ export const NavBar = () => {
 								<Nav.Link eventKey="link-1">Artists</Nav.Link>
 							</Nav.Item>
 							<Nav.Item as="li">
-								<NavDropdown title="For Artists">
-									<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-									<NavDropdown.Item href="#action/3.2">
-										Another action
+								<NavDropdown title="For Artists" align="end">
+									<NavDropdown.Item onClick={() => setLoginShow(true)}>
+										<BoxArrowInRight color="var(--secondary)" /> &nbsp; Login
 									</NavDropdown.Item>
+									<Link href="/signup" passHref>
+										<NavDropdown.Item>Join Now!</NavDropdown.Item>
+									</Link>
 									<NavDropdown.Item href="#action/3.3">
 										Something
 									</NavDropdown.Item>
@@ -57,14 +60,9 @@ export const NavBar = () => {
 									</NavDropdown.Item>
 								</NavDropdown>
 							</Nav.Item>
-						</Nav>
-						{user ? (
-							<Nav>
+							{user ? (
 								<Nav.Item>
 									<NavDropdown title={user.firstName}>
-										<NavDropdown.Item href="#action/3.1">
-											Action
-										</NavDropdown.Item>
 										<NavDropdown.Item href="#action/3.2">
 											Another action
 										</NavDropdown.Item>
@@ -82,26 +80,19 @@ export const NavBar = () => {
 										</NavDropdown.Item>
 									</NavDropdown>
 								</Nav.Item>
-							</Nav>
-						) : loading ? (
-							<Spinner
-								animation="border"
-								role="status"
-								size="sm"
-								variant="primary"
-							>
-								<span className="visually-hidden">Loading...</span>
-							</Spinner>
-						) : (
-							<Nav as="ul">
-								<Nav.Item as="li" onClick={() => setLoginShow(true)}>
-									<Nav.Link color="primary">Login</Nav.Link>
+							) : loading ? (
+								<Nav.Item className="d-flex align-items-center">
+									<Spinner
+										animation="border"
+										role="status"
+										size="sm"
+										variant="primary"
+									>
+										<span className="visually-hidden">Loading...</span>
+									</Spinner>
 								</Nav.Item>
-								<Link href="/signup">
-									<Button variant="outline-primary">Apply Now</Button>
-								</Link>
-							</Nav>
-						)}
+							) : null}
+						</Nav>
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>

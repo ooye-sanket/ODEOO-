@@ -12,9 +12,9 @@ const Home = () => {
 					<Row id='hero-section' className='align-items-center .justify-content-xs-around'>
 						<Col xs={{ span: 12, order: 'last' }} lg='6'>
 							<h1 className='display-5'>The Ultimate Platform For All Local Artists</h1>
-							<p className='text-muted'>We are team of Talented artist making your event memorable.</p>
+							<p className='text-muted'>We are team of Talented artists making your event memorable.</p>
 							<Button className='mb-1 me-1'>Post a Requirement</Button>
-							<Button className='mb-1 me-1' variant='outline-primary'>Learn More</Button>
+							<Button className='mb-1 me-1' variant='outline-dark'>Learn More</Button>
 						</Col>
 						<Col xs={{ span: 12, order: 'first' }} lg='6'>
 							<div className="text-center">
@@ -63,7 +63,10 @@ const Home = () => {
 				<div className="section-title">
 					<h2>Featured Artists</h2>
 				</div>
-				<Artist img='/priyaansh.jpg' name='Priyaansh Shah' desc='Some information' categories={['Bollywood', 'Garba']} link='/artists/1' />
+				<Row>
+					{artists.map((artist: any, key) => (<Col xs={12} sm={6} lg={4} xl='auto'>
+						<Artist key={key} img={artist.img} name={artist.name} desc={artist.desc} categories={artist.categories} link={artist.link} />
+					</Col>))}</Row>
 			</Container>
 		</>
 	);
@@ -72,3 +75,9 @@ const Home = () => {
 Home.layout = 'STANDARD'
 
 export default Home
+
+const artists = [
+	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
+	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
+	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
+]

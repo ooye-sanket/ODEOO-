@@ -1,4 +1,4 @@
-import { Login, NavBar } from '../components';
+import { Login, NavBar, Footer } from '../components';
 
 const Standard = ({ children }) => {
 	return (
@@ -6,6 +6,7 @@ const Standard = ({ children }) => {
 			<NavBar />
 			<Login />
 			{children}
+			<Footer />
 		</>
 	);
 };

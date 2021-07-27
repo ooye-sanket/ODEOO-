@@ -27,10 +27,7 @@ const Register = () => {
             mediaUrl: ""
          }
       ],
-      youtubeLinks: [
-         "",
-         ""
-      ],
+      youtubeLinks: [],
       meta: {
          genre: [],
          events: []
