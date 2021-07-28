@@ -43,7 +43,7 @@ export const Login = () => {
 				placement="end"
 				show={loginShow}
 				onHide={() => setLoginShow(false)}
-				style={{ background: 'var(--primary)' }}
+				// style={{ background: 'var(--primary)' }}
 			>
 				<Offcanvas.Header closeButton>
 					<Offcanvas.Title>Artist Login</Offcanvas.Title>
