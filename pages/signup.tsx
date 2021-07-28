@@ -7,12 +7,9 @@ import { At } from 'react-bootstrap-icons'
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import * as Yup from 'yup';
 import { BsFormik } from '../components'
-import Context from '../Context';
-import { useContext } from 'react';
 
 const Register = () => {
 
-   const { setLoginShow }: any = useContext(Context)
    const initialValues = {
       firstName: "",
       lastName: "",
@@ -52,8 +49,11 @@ const Register = () => {
             <p>
                <small>
                   Already registered?{' '}
-                  <Link href="/" passHref >
-                     <a onClick={() => setLoginShow(true)}>Login</a>
+                  <Link href={{
+                     pathname: '/',
+                     query: { showLogin: true }
+                  }} passHref >
+                     <a><b>Login</b></a>
                   </Link>
                </small>
             </p>
@@ -62,7 +62,6 @@ const Register = () => {
                validationSchema={validationSchema}
                onSubmit={signup}
                validateOnBlur
-
             >
                {({ values, errors, touched, isSubmitting }) => (
                   <FormikForm className='d-block my-auto'>
@@ -95,7 +94,7 @@ const Register = () => {
                         </Col>
                      </Row>
                      <Row>
-                        <Col xs='12' sm='4'>
+                        <Col xs='12' sm='5'>
                            <BsFormik
                               className='mb-3'
                               name="phone"
@@ -103,14 +102,14 @@ const Register = () => {
                               isInvalid={errors.phone && touched.phone}
                            />
                         </Col>
-                        <Col xs='12' sm='8' >
+                        <Col xs='12' sm='7' >
                            <InputGroup className="mb-3" >
                               <InputGroup.Text id="basic-addon1"><At size={24} /></InputGroup.Text>
                               <BsFormik
                                  className=' flex-grow-1'
                                  name="username"
                                  label="Username"
-                                 error={errors.username && touched.username}
+                                 isInvalid={errors.username && touched.username}
                                  style={{ borderTopLeftRadius: '0', borderBottomLeftRadius: '0' }}
                               />
                            </InputGroup>
@@ -122,6 +121,7 @@ const Register = () => {
                               className='mb-3'
                               name="password"
                               label="Password"
+                              type='password'
                               isInvalid={errors.password && touched.password}
                            />
                         </Col>
@@ -130,21 +130,19 @@ const Register = () => {
                               className='mb-3'
                               name="confirmPassword"
                               label="Confirm Password"
-                              error={errors.confirmPassword && touched.confirmPassword}
+                              type='password'
+                              isInvalid={errors.confirmPassword && touched.confirmPassword}
                            />
                         </Col>
                      </Row>
-                     <Row>
-
-
-                     </Row>
-
                      <Button
                         variant="success"
                         type="submit"
+                        size='lg'
                         disabled={isSubmitting}
+                        style={{ width: '100%' }}
                      >
-                        Submit
+                        Go Ahead!
                      </Button>
 
                   </FormikForm>

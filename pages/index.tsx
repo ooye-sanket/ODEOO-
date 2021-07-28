@@ -2,8 +2,16 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 import { Artist } from '../components'
+import { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router'
+import Context from '../Context';
+
 
 const Home = () => {
+	const { showLogin } = useRouter().query
+	const { setLoginShow }: any = useContext(Context)
+
+	useEffect(() => { if (showLogin) setLoginShow(true) }, [])
 
 	return (
 		<>

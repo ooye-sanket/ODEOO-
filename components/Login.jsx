@@ -74,23 +74,33 @@ export const Login = () => {
 										isInvalid={errors.password && touched.password}
 									/>
 								</Form.Group>
-								<Button variant="success" type="submit" disabled={isSubmitting}>
-									Submit
+								<Button
+									variant="success"
+									type="submit"
+									size="lg"
+									disabled={isSubmitting}
+									style={{ width: '100%' }}
+								>
+									Login
 								</Button>
-								<small className="ms-2">
-									New to Odeo.in?{' '}
-									<Link href="/signup">
-										<a>SignUp</a>
-									</Link>
-								</small>
 							</FormikForm>
 						)}
 					</Formik>
+					<br />
 					<Link href="/password-reset">
-						<a className="d-block mt-3">
+						<a>
 							<small>Forgot password?</small>
 						</a>
 					</Link>
+					<br />
+					<small>
+						New to Odeo.in?{' '}
+						<Link href="/signup">
+							<a>
+								<b>SignUp</b>
+							</a>
+						</Link>
+					</small>
 				</Offcanvas.Body>
 			</Offcanvas>
 		</>
