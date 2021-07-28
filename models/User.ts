@@ -11,9 +11,9 @@ export interface IUser extends Document {
 	address: string;
 	aadhar: string;
 	imgUrl: string;
-	contentToDisplay: ContentToDisplay[];
 	youtubeLinks: string[];
 	role: Role;
+	verification: { email: boolean; phone: boolean; profile: boolean };
 	meta: {
 		genre: Genre[];
 		events: Event[];
@@ -39,26 +39,18 @@ const UserSchema = new Schema(
 		address: String,
 		aadhar: String,
 		imgUrl: String,
-		contentToDisplay: [
-			{
-				_id: {
-					type: Schema.Types.ObjectId,
-					index: true,
-					required: true,
-					auto: true,
-				},
-				title: String,
-				description: String,
-				mediaUrl: String,
-			},
-		],
 		youtubeLinks: [String],
 		role: {
 			type: String,
 			enum: Object.values(Role),
 			required: true,
-			default: Role.UnverifiedArtist,
+			default: Role.Artist,
 			auto: true,
+		},
+		verification: {
+			email: { type: Boolean, required: true, default: false, auto: true },
+			phone: { type: Boolean, required: true, default: false, auto: true },
+			profile: { type: Boolean, required: true, default: false, auto: true },
 		},
 		meta: {
 			genre: { type: [String], enum: Object.values(Genre) },

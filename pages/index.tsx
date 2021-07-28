@@ -64,8 +64,8 @@ const Home = () => {
 					<h2>Featured Artists</h2>
 				</div>
 				<Row>
-					{artists.map((artist: any, key) => (<Col xs={12} sm={6} lg={4} xl='auto'>
-						<Artist key={key} img={artist.img} name={artist.name} desc={artist.desc} categories={artist.categories} link={artist.link} />
+					{artists.map((artist: any, key) => (<Col key={key} xs={12} sm={6} lg={4} xl='auto'>
+						<Artist img={artist.img} name={artist.name} desc={artist.desc} categories={artist.categories} link={artist.link} />
 					</Col>))}</Row>
 			</Container>
 		</>

@@ -9,8 +9,24 @@
 	}
 }
 
-// /register
+// /signup
 #signup {
+	position: relative;
 	height: 100vh;
+	margin: 0;
+	padding: 0;
 	background: var(--primary);
+	background: linear-gradient(135deg, #6264ba, #4c4dbd);
+	#form {
+		position: absolute;
+		bottom: 0;
+		background: #fff;
+		right: 0;
+		max-width: 48em;
+		min-height: 75vh;
+		max-height: 75vh;
+		overflow: auto;
+		border-top-left-radius: 1.2em;
+		box-shadow: -0.6em -0.6em 15px 5px rgba(0, 0, 0, 0.15);
+	}
 }

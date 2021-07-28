@@ -1,6 +1,5 @@
 export enum Role {
 	Admin = 'ADMIN',
-	UnverifiedArtist = 'UNVERIFIED_ARTIST',
 	Artist = 'ARTIST',
 }
 

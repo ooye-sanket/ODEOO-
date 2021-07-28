@@ -10,9 +10,9 @@ export const BsFormik = (props) => {
 	}
 };
 
-const Input = ({ label, name, error, ...rest }) => {
+const Input = ({ label, name, error, className, ...rest }) => {
 	return (
-		<>
+		<div className={className}>
 			{/* <Form.Label>{label}</Form.Label> */}
 			<FloatingLabel controlId={`floating-${name}`} label={label}>
 				<Field name={name}>
@@ -36,6 +36,6 @@ const Input = ({ label, name, error, ...rest }) => {
 					className="invalid-feedback"
 				/>
 			</FloatingLabel>
-		</>
+		</div>
 	);
 };
