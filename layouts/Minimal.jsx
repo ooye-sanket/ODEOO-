@@ -14,7 +14,7 @@ const Minimal = ({ children }) => {
 				query: { showLogin: true },
 			});
 		}
-	}, [loggedOut]);
+	}, [user]);
 
 	if (loading || loggedOut) {
 		return <>Loading...</>;
