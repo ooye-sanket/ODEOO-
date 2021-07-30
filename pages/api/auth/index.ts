@@ -23,14 +23,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							const usr = await User.findOne({ id }).select(
 								'-password -dateOfBirth -address -phone -__v'
 							);
-							const { firstName, lastName, username } = usr;
+							const { firstName, lastName, username, verification } = usr;
 							const token = sign(
 								{
 									user: usr.id,
 								},
 								// @ts-ignore
 								process.env.JWT_SECRET,
-								{ expiresIn: '15d' }
+								{ expiresIn: '7d' }
 							);
 							return res
 								.status(200)
@@ -38,11 +38,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 								.json({
 									msg: 'User signed in successfully',
 									data: {
+										id: usr.id,
 										firstName,
 										lastName,
 										username,
 										email: usr.email,
 										phone: usr.phone,
+										verification,
 									},
 								});
 						} else

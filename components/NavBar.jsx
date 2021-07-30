@@ -10,7 +10,7 @@ import {
 	Spinner,
 } from 'react-bootstrap';
 import Context from '../Context';
-import { BoxArrowInRight } from 'react-bootstrap-icons';
+import { BoxArrowInRight, BoxArrowRight } from 'react-bootstrap-icons';
 
 export const NavBar = () => {
 	const { loading, user, loginShow, setLoginShow } = useContext(Context);
@@ -76,7 +76,7 @@ export const NavBar = () => {
 												Router.reload();
 											}}
 										>
-											Logout
+											<BoxArrowRight color="var(--secondary)" /> &nbsp; Logout
 										</NavDropdown.Item>
 									</NavDropdown>
 								</Nav.Item>

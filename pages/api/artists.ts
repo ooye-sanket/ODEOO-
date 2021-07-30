@@ -20,14 +20,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 			try {
 				const artists = await User.find({
-					role: 'VERIFIED_ARTIST',
+					role: 'ARTIST',
+					$and: [
+						{ 'verification.email': true },
+						{ 'verification.profile': true },
+					],
 					$or: [
 						{ firstName: { $regex: q } },
 						{ lastName: { $regex: q } },
 						{ username: { $regex: q } },
 					],
 				}).select('-password -dateOfBirth -address -phone -__v');
-
+				console.log(artists);
 				return res
 					.status(200)
 					.json({ msg: 'Artists fetched successfully', data: artists });

@@ -71,6 +71,7 @@ export const Login = () => {
 									<BsFormik
 										name="password"
 										label="Password"
+										type="password"
 										isInvalid={errors.password && touched.password}
 									/>
 								</Form.Group>

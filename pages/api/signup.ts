@@ -68,7 +68,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							{ user: createdUsr.id },
 							// @ts-ignore
 							process.env.JWT_SECRET,
-							{ expiresIn: '15d' }
+							{ expiresIn: '7d' }
 						);
 						return res
 							.status(200)

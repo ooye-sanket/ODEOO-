@@ -14,8 +14,12 @@ export const Provider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 
 	const getUser = () => {
-		Axios.get('/users')
+		Axios.get('/auth')
 			.then((r) => {
+				localStorage.setItem(
+					'auth-token',
+					r.headers.authorization.split(' ')[1]
+				);
 				setUser(r.data.data);
 			})
 			.catch(console.error)
