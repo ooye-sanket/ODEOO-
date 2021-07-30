@@ -21,12 +21,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				phone,
 				password,
 				confirmPassword,
-				dateOfBirth,
-				address,
-				aadhar,
-				imageUrl,
-				contentToDisplay,
-				meta,
 			} = req.body;
 
 			if (
@@ -36,12 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				!email ||
 				!phone ||
 				!password ||
-				!confirmPassword ||
-				!dateOfBirth ||
-				!address ||
-				!imageUrl ||
-				!contentToDisplay ||
-				!meta
+				!confirmPassword
 			)
 				return res
 					.status(400)
@@ -53,7 +42,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			const unameExists = await User.findOne({ username });
 			const emailExists = await User.findOne({ email });
 			const phoneExists = await User.findOne({ phone });
-			const aadharExists = await User.findOne({ aadhar });
 
 			if (unameExists)
 				return res.status(400).json({ msg: 'Username already exists' });
@@ -61,12 +49,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				return res.status(400).json({ msg: 'Email already registered' });
 			if (phoneExists)
 				return res.status(400).json({ msg: 'Phone Number already registered' });
-			if (aadharExists)
-				return res
-					.status(400)
-					.json({ msg: 'Aadhar Number already registered' });
 
-			if (!unameExists && !emailExists && !phoneExists && !aadharExists) {
+			if (!unameExists && !emailExists && !phoneExists) {
 				try {
 					const hashedPwd = await hash(password, 12);
 					const newUsr = new User({
@@ -76,11 +60,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						email,
 						phone,
 						password: hashedPwd,
-						dateOfBirth,
-						address,
-						imageUrl,
-						contentToDisplay,
-						meta,
 					});
 
 					const createdUsr = await newUsr.save();
@@ -91,15 +70,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							process.env.JWT_SECRET,
 							{ expiresIn: '15d' }
 						);
-						return res.status(200).json({
-							msg: 'User signed up successfully',
-							data: {
-								username,
-								email,
-								phone,
-							},
-							token,
-						});
+						return res
+							.status(200)
+							.setHeader('Authorization', 'Bearer ' + token)
+							.json({
+								msg: 'User signed up successfully',
+								data: {
+									username,
+									email,
+									phone,
+								},
+							});
 					}
 				} catch (err) {
 					console.error('SignUp Error:', err);

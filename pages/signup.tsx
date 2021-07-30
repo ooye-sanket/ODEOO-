@@ -29,8 +29,7 @@ const Register = () => {
 
    const signup = (values: any) => {
       const { email, password } = values;
-      console.log('Login');
-      Axios.post('/signup', { email, password })
+      Axios.post('/signup', values)
          .then((r) => {
             localStorage.setItem(
                'auth-token',
