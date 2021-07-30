@@ -62,10 +62,10 @@ export const NavBar = () => {
 							</Nav.Item>
 							{user ? (
 								<Nav.Item>
-									<NavDropdown title={user.firstName}>
-										<NavDropdown.Item href="#action/3.2">
-											Another action
-										</NavDropdown.Item>
+									<NavDropdown title={user.firstName} align="end">
+										<Link href="/profile" passHref>
+											<NavDropdown.Item>Your Profile</NavDropdown.Item>
+										</Link>
 										<NavDropdown.Item href="#action/3.3">
 											Something
 										</NavDropdown.Item>

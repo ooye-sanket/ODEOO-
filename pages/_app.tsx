@@ -6,6 +6,7 @@ import "@fontsource/raleway/700.css"
 import "@fontsource/raleway/900.css"
 import '../styles/global.scss';
 import Standard from '../layouts/Standard'
+import Minimal from '../layouts/Minimal'
 import { Provider } from '../Context'
 import Axios from 'axios';
 
@@ -26,6 +27,7 @@ Axios.interceptors.request.use(
 
 const layouts = {
   STANDARD: Standard,
+  MINIMAL: Minimal,
 };
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
