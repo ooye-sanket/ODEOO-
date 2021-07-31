@@ -19,34 +19,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			const q = new RegExp(req.query?.q as string, 'i');
 
 			try {
-				const artists = await User.find({
-					role: 'ARTIST',
-					$and: [
-						{ 'verification.email': true },
-						{ 'verification.profile': true },
-					],
-					$or: [
-						{ firstName: { $regex: q } },
-						{ lastName: { $regex: q } },
-						{ username: { $regex: q } },
-					],
-				}).select('-password -dateOfBirth -address -phone -__v');
-				console.log(artists);
+				const inquiries = await Inquiry.find();
 				return res
 					.status(200)
-					.json({ msg: 'Artists fetched successfully', data: artists });
+					.json({ msg: 'Inquiries fetched successfully', data: inquiries });
 			} catch (err) {
-				console.error('Artists Error:', err);
+				console.error('Inquiries Error:', err);
 				return res.status(500).json({ msg: 'Something went wrong' });
 			}
-
-			// .select('name')
-			// .limit(limit)
-			// .skip(limit * page)
-			// .sort({
-			// 	name: 'asc',
-			// });
-
 			break;
 		case 'POST':
 			if (!req.body) return res.status(400).json({ msg: 'Request Invalid' });
