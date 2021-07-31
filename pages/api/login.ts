@@ -32,11 +32,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							const { firstName, lastName, username } = usr;
 							const token = jwt.sign(
 								{
-									user: usr.id,
+									userId: usr.id,
 								},
 								// @ts-ignore
 								process.env.JWT_SECRET,
-								{ expiresIn: '15d' }
+								{ expiresIn: '7d' }
 							);
 
 							return res

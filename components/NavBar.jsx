@@ -46,25 +46,9 @@ export const NavBar = () => {
 							<Nav.Item as="li">
 								<Nav.Link eventKey="link-1">Artists</Nav.Link>
 							</Nav.Item>
-							<Nav.Item as="li">
-								<NavDropdown title="For Artists" align="end">
-									<NavDropdown.Item onClick={() => setLoginShow(true)}>
-										<BoxArrowInRight color="var(--secondary)" /> &nbsp; Login
-									</NavDropdown.Item>
-									<Link href="/signup" passHref>
-										<NavDropdown.Item>Join Now!</NavDropdown.Item>
-									</Link>
-									<NavDropdown.Item href="#action/3.3">
-										Something
-									</NavDropdown.Item>
-									<NavDropdown.Divider />
-									<NavDropdown.Item href="#action/3.4">
-										Separated link
-									</NavDropdown.Item>
-								</NavDropdown>
-							</Nav.Item>
+
 							{user ? (
-								<Nav.Item>
+								<Nav.Item as="li">
 									<NavDropdown title={user.firstName} align="end">
 										<Link href="/profile" passHref>
 											<NavDropdown.Item>Your Profile</NavDropdown.Item>
@@ -94,7 +78,25 @@ export const NavBar = () => {
 										<span className="visually-hidden">Loading...</span>
 									</Spinner>
 								</Nav.Item>
-							) : null}
+							) : (
+								<Nav.Item as="li">
+									<NavDropdown title="For Artists" align="end">
+										<NavDropdown.Item onClick={() => setLoginShow(true)}>
+											<BoxArrowInRight color="var(--secondary)" /> &nbsp; Login
+										</NavDropdown.Item>
+										<Link href="/signup" passHref>
+											<NavDropdown.Item>Join Now!</NavDropdown.Item>
+										</Link>
+										<NavDropdown.Item href="#action/3.3">
+											Something
+										</NavDropdown.Item>
+										<NavDropdown.Divider />
+										<NavDropdown.Item href="#action/3.4">
+											Separated link
+										</NavDropdown.Item>
+									</NavDropdown>
+								</Nav.Item>
+							)}
 						</Nav>
 					</Navbar.Collapse>
 				</Container>

@@ -20,11 +20,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					async (err, decoded) => {
 						if (!err && decoded) {
 							const { id } = decoded;
-							const usr = await User.findOne({ id }).select('-password -__v');
+							const usr = await User.findOne({ id }).select(
+								'id firstName lastName username, email, phone, verification'
+							);
 							const { firstName, lastName, username, verification } = usr;
 							const token = sign(
 								{
-									user: usr.id,
+									userId: usr.id,
 								},
 								// @ts-ignore
 								process.env.JWT_SECRET,
@@ -35,15 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 								.setHeader('Authorization', 'Bearer ' + token)
 								.json({
 									msg: 'User signed in successfully',
-									data: {
-										id: usr.id,
-										firstName,
-										lastName,
-										username,
-										email: usr.email,
-										phone: usr.phone,
-										verification,
-									},
+									data: usr,
 								});
 						} else
 							return res.status(403).json({ msg: 'No authorisation token' });

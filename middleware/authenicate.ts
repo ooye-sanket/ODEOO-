@@ -1,5 +1,6 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { verify } from 'jsonwebtoken';
+import { User } from '../models';
 
 const authenticate =
 	(handler: NextApiHandler) =>
@@ -11,8 +12,18 @@ const authenticate =
 				// @ts-ignore
 				process.env.JWT_SECRET,
 				async (err, decoded) => {
-					if (!err && decoded) return await handler(req, res);
-					else return res.status(403).json({ msg: 'No authorisation token' });
+					if (!err && decoded) {
+						try {
+							const usr = await User.findById(decoded.userId).select(
+								'id username email password role'
+							);
+							// @ts-ignore
+							req.user = usr;
+							return await handler(req, res);
+						} catch (error) {
+							console.error('Authenticate Middleware:', error);
+						}
+					} else return res.status(403).json({ msg: 'No authorisation token' });
 				}
 			);
 		} catch (err) {

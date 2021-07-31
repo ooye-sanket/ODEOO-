@@ -54,7 +54,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				const createdUsr = await newUsr.save();
 				if (createdUsr) {
 					const token = sign(
-						{ user: createdUsr.id },
+						{ userId: createdUsr.id },
 						// @ts-ignore
 						process.env.JWT_SECRET,
 						{ expiresIn: '7d' }
