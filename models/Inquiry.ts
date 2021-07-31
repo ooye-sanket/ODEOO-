@@ -1,7 +1,8 @@
-import { Document, Schema, model, models } from 'mongoose';
+import { Document, Schema, model, models, Types } from 'mongoose';
 import { Event, Genre, Role } from '../@types';
 
 export interface IInquiry extends Document {
+	id: string;
 	name: string;
 	phone: string;
 	email: string;
@@ -15,7 +16,11 @@ const InquirySchema = new Schema(
 	{
 		name: { type: String, required: true },
 		phone: { type: String, required: true },
-		email: String,
+		email: {
+			type: String,
+			match: /.+\@.+\..+/,
+			unique: true,
+		},
 		genre: { type: String, enum: Object.values(Genre), required: true },
 		event: { type: String, enum: Object.values(Event), required: true },
 		evntDate: { type: String, required: true },

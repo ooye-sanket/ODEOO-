@@ -1,7 +1,8 @@
-import { Document, Schema, model, models } from 'mongoose';
+import { Document, Schema, model, models, Types } from 'mongoose';
 import { Event, Genre, Role } from '../@types';
 
 export interface IUser extends Document {
+	id: string;
 	firstName: string;
 	lastName: string;
 	username: string;
@@ -31,9 +32,14 @@ const UserSchema = new Schema(
 	{
 		firstName: String,
 		lastName: String,
-		username: String,
-		email: String,
-		phone: String,
+		username: { type: String, required: true, unique: true },
+		email: {
+			type: String,
+			required: true,
+			match: /.+\@.+\..+/,
+			unique: true,
+		},
+		phone: { type: String, required: true, unique: true },
 		password: String,
 		dateOfBirth: String,
 		address: String,

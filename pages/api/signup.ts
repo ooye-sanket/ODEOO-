@@ -5,6 +5,7 @@ import cors from '../../middleware/cors';
 import { sign } from 'jsonwebtoken';
 import { hash } from 'bcrypt';
 import { User, IUser } from '../../models';
+import { capitalise } from '../../utils/helpers';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
@@ -39,55 +40,49 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			if (password !== confirmPassword)
 				return res.status(400).json({ msg: "Passwords don't match" });
 
-			const unameExists = await User.findOne({ username });
-			const emailExists = await User.findOne({ email });
-			const phoneExists = await User.findOne({ phone });
+			try {
+				const hashedPwd = await hash(password, 12);
+				const newUsr = new User({
+					firstName,
+					lastName,
+					username,
+					email,
+					phone,
+					password: hashedPwd,
+				});
 
-			if (unameExists)
-				return res.status(400).json({ msg: 'Username already exists' });
-			if (emailExists)
-				return res.status(400).json({ msg: 'Email already registered' });
-			if (phoneExists)
-				return res.status(400).json({ msg: 'Phone Number already registered' });
-
-			if (!unameExists && !emailExists && !phoneExists) {
-				try {
-					const hashedPwd = await hash(password, 12);
-					const newUsr = new User({
-						firstName,
-						lastName,
-						username,
-						email,
-						phone,
-						password: hashedPwd,
-					});
-
-					const createdUsr = await newUsr.save();
-					if (createdUsr) {
-						const token = sign(
-							{ user: createdUsr.id },
-							// @ts-ignore
-							process.env.JWT_SECRET,
-							{ expiresIn: '7d' }
-						);
-						return res
-							.status(200)
-							.setHeader('Authorization', 'Bearer ' + token)
-							.json({
-								msg: 'User signed up successfully',
-								data: {
-									id: createdUsr.id,
-									username: createdUsr.username,
-									email: createdUsr.email,
-									phone: createdUsr.phone,
-								},
-							});
-					}
-				} catch (err) {
-					console.error('SignUp Error:', err);
-					return res.status(500).json({ msg: 'Something went wrong' });
+				const createdUsr = await newUsr.save();
+				if (createdUsr) {
+					const token = sign(
+						{ user: createdUsr.id },
+						// @ts-ignore
+						process.env.JWT_SECRET,
+						{ expiresIn: '7d' }
+					);
+					return res
+						.status(200)
+						.setHeader('Authorization', 'Bearer ' + token)
+						.json({
+							msg: 'User signed up successfully',
+							data: {
+								id: createdUsr.id,
+								username: createdUsr.username,
+								email: createdUsr.email,
+								phone: createdUsr.phone,
+							},
+						});
 				}
+			} catch (err: any) {
+				console.error('SignUp Error:', err);
+				if (err.code == 11000) {
+					const key = capitalise(Object.keys(err.keyValue)[0]);
+					return res.status(400).json({
+						msg: `${key} already exists`,
+					});
+				}
+				return res.status(500).json({ msg: 'Something went wrong' });
 			}
+			// }
 			break;
 		default:
 			return res.status(405).end('Method Not Allowed'); //Method Not Allowed
