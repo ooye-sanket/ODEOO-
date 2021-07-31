@@ -9,11 +9,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	switch (req.method) {
 		case 'GET':
-			const { id } = req.query;
+			const { username } = req.query;
 			try {
 				const artist = await User.findOne({
 					role: 'ARTIST',
-					_id: id,
+					username,
 				}).select('-password -dateOfBirth -address -phone -__v');
 				console.log(artist);
 				return res
