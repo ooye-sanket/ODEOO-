@@ -8,7 +8,7 @@ export const Artist = ({ img, name, desc, categories, link }) => {
 			<Badge
 				bg="light"
 				text="dark"
-				className="position-absolute m-2 top-0 end-0"
+				className="position-absolute m-3 top-0 end-0"
 			>
 				PRO
 			</Badge>

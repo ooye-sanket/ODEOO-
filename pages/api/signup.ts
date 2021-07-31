@@ -76,9 +76,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							.json({
 								msg: 'User signed up successfully',
 								data: {
-									username,
-									email,
-									phone,
+									id: createdUsr.id,
+									username: createdUsr.username,
+									email: createdUsr.email,
+									phone: createdUsr.phone,
 								},
 							});
 					}

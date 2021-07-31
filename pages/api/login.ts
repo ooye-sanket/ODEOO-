@@ -19,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				!((email && password) || (phone && password) || (username && password))
 			)
 				return res
-					.status(400)
+					.status(422)
 					.json({ msg: 'Please enter all the required fields' });
 
 			if (email) {

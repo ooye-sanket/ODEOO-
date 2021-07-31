@@ -44,6 +44,9 @@ export const NavBar = () => {
 								<Nav.Link eventKey="link-1">Artists</Nav.Link>
 							</Nav.Item>
 							<Nav.Item as="li">
+								<Nav.Link eventKey="link-1">Artists</Nav.Link>
+							</Nav.Item>
+							<Nav.Item as="li">
 								<NavDropdown title="For Artists" align="end">
 									<NavDropdown.Item onClick={() => setLoginShow(true)}>
 										<BoxArrowInRight color="var(--secondary)" /> &nbsp; Login
