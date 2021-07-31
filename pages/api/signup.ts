@@ -21,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				email,
 				phone,
 				password,
-				confirmPassword,
+				passwordConfirm,
 			} = req.body;
 
 			if (
@@ -31,17 +31,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				!email ||
 				!phone ||
 				!password ||
-				!confirmPassword
+				!passwordConfirm
 			)
 				return res
 					.status(400)
 					.json({ msg: 'Please enter all the required fields' });
 
-			if (password !== confirmPassword)
+			if (password !== passwordConfirm)
 				return res.status(400).json({ msg: "Passwords don't match" });
 
 			try {
-				const hashedPwd = await hash(password, 12);
+				const hashedPwd = await hash(password, 10);
 				const newUsr = new User({
 					firstName,
 					lastName,

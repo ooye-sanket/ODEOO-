@@ -30,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						{ lastName: { $regex: q } },
 						{ username: { $regex: q } },
 					],
-				}).select('-password -dateOfBirth -address -phone -__v');
+				}).select('firstName lastName username meta.genre');
 				console.log(artists);
 				return res
 					.status(200)

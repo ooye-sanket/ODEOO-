@@ -15,7 +15,7 @@ export const Provider = ({ children }) => {
 	const [loggedOut, setLoggedOut] = useState(true);
 
 	const getUser = () => {
-		Axios.get('/auth')
+		Axios.get('/user')
 			.then((r) => {
 				localStorage.setItem(
 					'auth-token',

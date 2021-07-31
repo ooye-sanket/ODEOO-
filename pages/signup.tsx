@@ -17,7 +17,7 @@ const Register = () => {
       email: "",
       phone: "",
       password: "",
-      confirmPassword: ''
+      passwordConfirm: ''
 
    };
    const validationSchema = Yup.object().shape({
@@ -127,10 +127,10 @@ const Register = () => {
                         <Col xs='12' sm='6'>
                            <BsFormik
                               className='mb-3'
-                              name="confirmPassword"
+                              name="passwordConfirm"
                               label="Confirm Password"
                               type='password'
-                              isInvalid={errors.confirmPassword && touched.confirmPassword}
+                              isInvalid={errors.passwordConfirm && touched.passwordConfirm}
                            />
                         </Col>
                      </Row>

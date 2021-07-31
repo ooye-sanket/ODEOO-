@@ -8,14 +8,7 @@
   "dateOfBirth": "20-05-2000",
   "address": "Your Heart",
   "aadhar": "123445679876",
-  "imageUrl": "https: //picsum.photos/200",
-  "contentToDisplay": [
-    {
-      "title": "Youtube Video",
-      "description": "My Youtube Video",
-      "mediaUrl": "https: //picsum.photos/200"
-    }
-  ],
+  "imgUrl": "https: //picsum.photos/200",
   "youtubeLinks": [
     "https: //picsum.photos/200",
     "https://picsum.photos/200"

@@ -20,9 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					async (err, decoded) => {
 						if (!err && decoded) {
 							const { id } = decoded;
-							const usr = await User.findOne({ id }).select(
-								'-password -dateOfBirth -address -phone -__v'
-							);
+							const usr = await User.findOne({ id }).select('-password -__v');
 							const { firstName, lastName, username, verification } = usr;
 							const token = sign(
 								{

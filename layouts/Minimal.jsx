@@ -8,13 +8,13 @@ const Minimal = ({ children }) => {
 	// const router = useRouter();
 
 	useEffect(() => {
-		if (loggedOut) {
+		if (!user && !loading) {
 			Router.replace({
 				pathname: '/',
 				query: { showLogin: true },
 			});
 		}
-	}, [user]);
+	}, []);
 
 	if (loading || loggedOut) {
 		return <>Loading...</>;
