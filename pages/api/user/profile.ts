@@ -74,20 +74,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 
 		case 'PUT':
-			if (
-				!id ||
-				!firstName ||
-				!lastName ||
-				!username ||
-				!email ||
-				!phone ||
-				!address ||
-				!dateOfBirth ||
-				!aadhar ||
-				!imgUrl ||
-				!youtubeLinks ||
-				!meta
-			)
+			if (!id || !password)
 				return res
 					.status(400)
 					.json({ msg: 'Please enter all the required fields' });
