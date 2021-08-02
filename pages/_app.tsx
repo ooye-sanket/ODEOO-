@@ -7,6 +7,7 @@ import "@fontsource/raleway/900.css"
 import '../styles/global.scss';
 import Standard from '../layouts/Standard'
 import Minimal from '../layouts/Minimal'
+import Admin from '../layouts/Admin'
 import { Provider } from '../Context'
 import Axios from 'axios';
 
@@ -26,6 +27,7 @@ Axios.interceptors.request.use(
 );
 
 const layouts = {
+  ADMIN: Admin,
   STANDARD: Standard,
   MINIMAL: Minimal,
 };

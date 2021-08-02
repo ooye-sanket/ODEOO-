@@ -2,7 +2,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { verify } from 'jsonwebtoken';
 import { User } from '../models';
 
-const authenticate =
+const withUserStrict =
 	(handler: NextApiHandler) =>
 	async (req: NextApiRequest, res: NextApiResponse) => {
 		try {
@@ -32,4 +32,4 @@ const authenticate =
 		}
 	};
 
-export default authenticate;
+export default withUserStrict;

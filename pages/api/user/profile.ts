@@ -6,7 +6,7 @@ import cors from '../../../middleware/cors';
 import { sign } from 'jsonwebtoken';
 import { User, IUser } from '../../../models';
 import { capitalise } from '../../../utils/helpers';
-import authenticate from '../../../middleware/authenicate';
+import withUserStrict from '../../../middleware/withUserStrict';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
@@ -143,4 +143,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default connectDB(authenticate(handler));
+export default connectDB(withUserStrict(handler));

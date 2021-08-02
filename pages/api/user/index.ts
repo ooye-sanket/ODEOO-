@@ -23,7 +23,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							const usr = await User.findOne({ id }).select(
 								'id firstName lastName username, email, phone, verification'
 							);
-							const { firstName, lastName, username, verification } = usr;
 							const token = sign(
 								{
 									userId: usr.id,

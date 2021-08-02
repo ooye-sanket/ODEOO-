@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../../middleware/connectDB';
 import cors from '../../../middleware/cors';
+import withUser from '../../../middleware/withUser';
 import { User } from '../../../models';
 import runMiddleware from '../../../utils/runMiddleware';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
+	const usr = req.user;
 
 	switch (req.method) {
 		case 'GET':
@@ -18,19 +20,33 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				| undefined;
 			const q = new RegExp(req.query?.q as string, 'i');
 
+			const query =
+				usr.role === 'ADMIN'
+					? {
+							role: 'ARTIST',
+							$or: [
+								{ firstName: { $regex: q } },
+								{ lastName: { $regex: q } },
+								{ username: { $regex: q } },
+							],
+					  }
+					: {
+							role: 'ARTIST',
+							$and: [
+								{ 'verification.email': true },
+								{ 'verification.profile': true },
+							],
+							$or: [
+								{ firstName: { $regex: q } },
+								{ lastName: { $regex: q } },
+								{ username: { $regex: q } },
+							],
+					  };
+			const select =
+				usr.role === 'ADMIN' ? '*' : 'firstName lastName username meta.genre';
+
 			try {
-				const artists = await User.find({
-					role: 'ARTIST',
-					$and: [
-						{ 'verification.email': true },
-						{ 'verification.profile': true },
-					],
-					$or: [
-						{ firstName: { $regex: q } },
-						{ lastName: { $regex: q } },
-						{ username: { $regex: q } },
-					],
-				}).select('firstName lastName username meta.genre');
+				const artists = await User.find(query).select(select);
 				console.log(artists);
 				return res
 					.status(200)
@@ -54,4 +70,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default connectDB(handler);
+export default connectDB(withUser(handler));

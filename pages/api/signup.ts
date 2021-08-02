@@ -51,7 +51,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					password: hashedPwd,
 				});
 
-				const createdUsr = await newUsr.save();
+				const createdUsr = await newUsr
+					.save()
+					.select('id firstName lastName username email phone verification');
 				if (createdUsr) {
 					const token = sign(
 						{ userId: createdUsr.id },
@@ -64,12 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						.setHeader('Authorization', 'Bearer ' + token)
 						.json({
 							msg: 'User signed up successfully',
-							data: {
-								id: createdUsr.id,
-								username: createdUsr.username,
-								email: createdUsr.email,
-								phone: createdUsr.phone,
-							},
+							data: createdUsr,
 						});
 				}
 			} catch (err: any) {
