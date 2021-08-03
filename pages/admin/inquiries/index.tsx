@@ -46,7 +46,7 @@ const Inquiries = () => {
                      </tr>
                   )
                   : inquiries?.map((itr: any) => (
-                     <tr>
+                     <tr key={itr._id}>
                         <td>{itr.id}</td>
                         <td>{itr.name}</td>
                         <td>{itr.phone}</td>

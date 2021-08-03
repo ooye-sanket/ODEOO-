@@ -40,13 +40,13 @@ const AdminPage = () => {
                ) : artists.length == 0 ?
                   (
                      <tr>
-                        <td colSpan={4} className='text-center'>
+                        <td colSpan={6} className='text-center'>
                            No Artists Found
                         </td>
                      </tr>
                   )
                   : artists?.map((itr: any) => (
-                     <tr>
+                     <tr key={itr._id}>
                         <td>{itr._id}</td>
                         <td>{itr.firstName} {itr.lastName}</td>
                         <td>{itr.username}</td>
