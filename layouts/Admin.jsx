@@ -28,6 +28,11 @@ const Admin = ({ children }) => {
 					</Container>
 				</>
 			);
+		} else {
+			router.push({
+				pathname: '/',
+				query: { showLogin: true },
+			});
 		}
 	} else if (loading) {
 		return <>Loading...</>;
