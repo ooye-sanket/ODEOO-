@@ -3,6 +3,7 @@ import { Event, Genre, Role } from '../@types';
 
 export interface IInquiry extends Document {
 	id: string;
+	artist: any;
 	name: string;
 	phone: string;
 	email: string;
@@ -28,6 +29,11 @@ const InquirySchema = new Schema(
 		city: { type: String, required: true },
 		state: { type: String, required: true },
 		country: { type: String, required: true },
+		artist: {
+			firstName: String,
+			lastName: String,
+			username: String,
+		},
 	},
 	{ timestamps: true }
 );

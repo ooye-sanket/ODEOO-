@@ -1,15 +1,15 @@
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { Login, AdminNav } from '../components';
 import Context from '../Context';
 
 const Admin = ({ children }) => {
-	const { user, loading, loggedOut } = useContext(Context);
-	// const router = useRouter();
+	const { user, loading } = useContext(Context);
+	const router = useRouter();
 
 	// useEffect(() => {
-	// 	if (!user && !loading) {
+	// 	if (user?.role !== 'ADMIN' && !loading) {
 	// 		Router.replace({
 	// 			pathname: '/',
 	// 			query: { showLogin: true },
@@ -17,19 +17,27 @@ const Admin = ({ children }) => {
 	// 	}
 	// }, []);
 
-	// if (loading || loggedOut) {
-	// 	return <>Loading...</>;
-	// }
-
-	return (
-		<>
-			<AdminNav />
-			<Login />
-			<Container fluid="sm" className="py-3">
-				{children}
-			</Container>
-		</>
-	);
+	if (!!user) {
+		if (user.role === 'ADMIN') {
+			return (
+				<>
+					<AdminNav />
+					<Login />
+					<Container fluid="sm" className="py-3">
+						{children}
+					</Container>
+				</>
+			);
+		}
+	} else if (loading) {
+		return <>Loading...</>;
+	} else {
+		router.push({
+			pathname: '/',
+			query: { showLogin: true },
+		});
+	}
+	return <>Please wait...</>;
 };
 
 export default Admin;

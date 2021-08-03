@@ -35,7 +35,7 @@ const Register = () => {
                'auth-token',
                r.headers.authorization.split(' ')[1]
             );
-            Router.reload();
+            window.open('/');
          })
          .catch(console.error);
    };

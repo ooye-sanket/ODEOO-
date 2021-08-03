@@ -7,6 +7,7 @@ import runMiddleware from '../../../utils/runMiddleware';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
+	// @ts-ignore
 	const usr = req.user;
 
 	switch (req.method) {
@@ -21,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			const q = new RegExp(req.query?.q as string, 'i');
 
 			const query =
-				usr.role === 'ADMIN'
+				usr?.role === 'ADMIN'
 					? {
 							role: 'ARTIST',
 							$or: [
@@ -43,10 +44,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							],
 					  };
 			const select =
-				usr.role === 'ADMIN' ? '*' : 'firstName lastName username meta.genre';
+				usr?.role === 'ADMIN'
+					? '-password'
+					: 'firstName lastName username meta.genre';
 
 			try {
-				const artists = await User.find(query).select(select);
+				const artists = await User.find(query, select);
 				console.log(artists);
 				return res
 					.status(200)

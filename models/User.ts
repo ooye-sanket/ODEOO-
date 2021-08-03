@@ -19,6 +19,7 @@ export interface IUser extends Document {
 		genre: Genre[];
 		events: Event[];
 	};
+	hidden: boolean;
 }
 
 interface ContentToDisplay {
@@ -46,6 +47,10 @@ const UserSchema = new Schema(
 		aadhar: String,
 		imgUrl: String,
 		youtubeLinks: [String],
+		meta: {
+			genre: { type: [String], enum: Object.values(Genre) },
+			events: { type: [String], enum: Object.values(Event) },
+		},
 		role: {
 			type: String,
 			enum: Object.values(Role),
@@ -58,10 +63,7 @@ const UserSchema = new Schema(
 			phone: { type: Boolean, required: true, default: false, auto: true },
 			profile: { type: Boolean, required: true, default: false, auto: true },
 		},
-		meta: {
-			genre: { type: [String], enum: Object.values(Genre) },
-			events: { type: [String], enum: Object.values(Event) },
-		},
+		hidden: { type: Boolean, required: true, default: false, auto: true },
 	},
 	{ timestamps: true }
 );

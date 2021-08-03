@@ -14,21 +14,22 @@ export const Provider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 	const [loggedOut, setLoggedOut] = useState(true);
 
-	const getUser = () => {
-		Axios.get('/user')
-			.then((r) => {
-				localStorage.setItem(
-					'auth-token',
-					r.headers.authorization.split(' ')[1]
-				);
-				setUser(r.data.data);
-				setLoggedOut(false);
-			})
-			.catch(console.error)
-			.finally(() => setLoading(false));
-	};
-
-	useEffect(() => getUser(), []);
+	useEffect(() => {
+		const getUser = async () => {
+			Axios.get('/user')
+				.then((r) => {
+					localStorage.setItem(
+						'auth-token',
+						r.headers.authorization.split(' ')[1]
+					);
+					setUser(r.data.data);
+					setLoggedOut(false);
+				})
+				.catch(console.error)
+				.finally(() => setLoading(false));
+		};
+		getUser();
+	}, []);
 
 	return (
 		<Context.Provider

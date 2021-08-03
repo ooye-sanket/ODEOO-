@@ -47,7 +47,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					.status(400)
 					.json({ msg: 'Please enter all the required fields' });
 
-			if (usr.role !== 'ADMIN' && (id || verification))
+			if (usr?.role !== 'ADMIN' && (id || verification))
 				return res.status(401).json({ msg: 'Request unauthorized' });
 
 			compare(password, usr.password, async (err: any, obj: any) => {
@@ -83,7 +83,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					.status(400)
 					.json({ msg: 'Please enter all the required fields' });
 
-			if (usr.role === 'ADMIN' && id) {
+			if (usr?.role === 'ADMIN' && id) {
 				try {
 					const updatedUsr = await User.findByIdAndUpdate(id, {
 						firstName,

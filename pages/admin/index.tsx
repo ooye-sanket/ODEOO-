@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Spinner, Table } from 'react-bootstrap'
+import { Spinner, Table, Badge } from 'react-bootstrap'
 
 const AdminPage = () => {
    const [artists, setArtists] = useState([])
@@ -11,13 +11,16 @@ const AdminPage = () => {
    }, [])
 
    return (
-      <Table striped bordered hover>
+
+      <Table responsive striped bordered hover >
          <thead>
             <tr>
                <th>#</th>
-               <th>First Name</th>
-               <th>Last Name</th>
+               <th>Name</th>
                <th>Username</th>
+               <th>Email</th>
+               <th>Phone</th>
+               <th>Verification</th>
             </tr>
          </thead>
          <tbody>
@@ -44,10 +47,16 @@ const AdminPage = () => {
                   )
                   : artists?.map((itr: any) => (
                      <tr>
-                        <td>{itr.id}</td>
-                        <td>{itr.firstName}</td>
-                        <td>{itr.lastName}</td>
+                        <td>{itr._id}</td>
+                        <td>{itr.firstName} {itr.lastName}</td>
                         <td>{itr.username}</td>
+                        <td>{itr.email}</td>
+                        <td>{itr.phone}</td>
+                        <td>
+                           <Status label='Email' verified={itr.verification.email} /> &nbsp;
+                           <Status label='Phone' verified={itr.verification.phone} /> &nbsp;
+                           <Status label='Profile' verified={itr.verification.profile} />
+                        </td>
                      </tr>
                   ))
             }
@@ -59,3 +68,11 @@ const AdminPage = () => {
 AdminPage.layout = 'ADMIN'
 
 export default AdminPage
+
+
+const Status = ({ verified, label }: any) => {
+
+   return (<Badge bg={verified ? 'success' : 'danger'}>{label}</Badge>
+
+   )
+}
