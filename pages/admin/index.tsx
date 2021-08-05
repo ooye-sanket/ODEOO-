@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Spinner, Table, Badge } from 'react-bootstrap'
 
 const AdminPage = () => {
-   const [data, setData] = useState({ loading: true, artists: null });
+   const [data, setData] = useState({ loading: true, artists: [] });
 
    useEffect(() => {
       Axios.get('/artists').then((r) =>
@@ -47,7 +47,7 @@ const AdminPage = () => {
                         </td>
                      </tr>
                   )
-                  : data.artists?.map((itr: any) => (
+                  : data.artists.map((itr: any) => (
                      <tr key={itr._id}>
                         <td>{itr._id}</td>
                         <td>{itr.firstName} {itr.lastName}</td>

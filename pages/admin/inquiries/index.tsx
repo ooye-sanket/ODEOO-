@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
 
 const Inquiries = () => {
-   const [data, setData] = useState({ loading: true, inquiries: null });
+   const [data, setData] = useState({ loading: true, inquiries: [] });
 
    useEffect(() => {
       Axios.get('/inquiries').then((r) =>
@@ -47,7 +47,7 @@ const Inquiries = () => {
                         </td>
                      </tr>
                   )
-                  : data.inquiries?.map((itr: any) => (
+                  : data.inquiries.map((itr: any) => (
                      <tr key={itr._id}>
                         <td>{itr.id}</td>
                         <td>{itr.name}</td>

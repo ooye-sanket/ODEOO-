@@ -2,7 +2,7 @@ import Axios from 'axios';
 import Link from 'next/link';
 import Router from 'next/router';
 import Image from 'next/image'
-import { Container, Row, Col, Card, Button, InputGroup, FormControl } from 'react-bootstrap'
+import { Container, Row, Col, Button, InputGroup } from 'react-bootstrap'
 import { At } from 'react-bootstrap-icons'
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import * as Yup from 'yup';
