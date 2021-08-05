@@ -1,16 +1,8 @@
-import Axios from 'axios'
-import { useEffect, useState } from 'react'
 import { Spinner, Table, Badge } from 'react-bootstrap'
+import useFetch from '../../hooks/useFetch'
 
 const AdminPage = () => {
-   const [data, setData] = useState({ loading: true, artists: [] });
-
-   useEffect(() => {
-      Axios.get('/artists').then((r) =>
-         setData(data => ({ ...data, artists: r.data.data })))
-         .catch(console.error)
-         .finally(() => setData((data) => ({ ...data, loading: false })))
-   }, [])
+   const { data: artists, loading } = useFetch('/artists')
 
    return (
 
@@ -27,7 +19,7 @@ const AdminPage = () => {
          </thead>
          <tbody>
             {
-               data.loading ? (
+               loading ? (
                   <tr>
                      <td colSpan={6} className='text-center'>
                         <Spinner
@@ -39,7 +31,7 @@ const AdminPage = () => {
                         </Spinner>
                      </td>
                   </tr>
-               ) : data.artists.length == 0 ?
+               ) : artists.length == 0 ?
                   (
                      <tr>
                         <td colSpan={6} className='text-center'>
@@ -47,7 +39,7 @@ const AdminPage = () => {
                         </td>
                      </tr>
                   )
-                  : data.artists.map((itr: any) => (
+                  : artists.map((itr: any) => (
                      <tr key={itr._id}>
                         <td>{itr._id}</td>
                         <td>{itr.firstName} {itr.lastName}</td>

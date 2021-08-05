@@ -1,16 +1,10 @@
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
+import useFetch from '../../../hooks/useFetch'
 
 const Inquiries = () => {
-   const [data, setData] = useState({ loading: true, inquiries: [] });
-
-   useEffect(() => {
-      Axios.get('/inquiries').then((r) =>
-         setData(data => ({ ...data, inquiries: r.data.data })))
-         .catch(console.error)
-         .finally(() => setData((data) => ({ ...data, loading: false })))
-   }, [])
+   const { data: inquiries, loading } = useFetch('/inquiries')
 
    return (
       <Table striped bordered hover>
@@ -27,7 +21,7 @@ const Inquiries = () => {
          </thead>
          <tbody>
             {
-               data.loading ? (
+               loading ? (
                   <tr>
                      <td colSpan={7} className='text-center'>
                         <Spinner
@@ -39,7 +33,7 @@ const Inquiries = () => {
                         </Spinner>
                      </td>
                   </tr>
-               ) : data.inquiries.length == 0 ?
+               ) : inquiries.length == 0 ?
                   (
                      <tr>
                         <td colSpan={7} className='text-center'>
@@ -47,7 +41,7 @@ const Inquiries = () => {
                         </td>
                      </tr>
                   )
-                  : data.inquiries.map((itr: any) => (
+                  : inquiries.map((itr: any) => (
                      <tr key={itr._id}>
                         <td>{itr.id}</td>
                         <td>{itr.name}</td>

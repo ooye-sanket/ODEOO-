@@ -27,7 +27,7 @@ const Admin = ({ children }) => {
 				</Container>
 			</>
 		) : (
-			router.push({
+			router.replace({
 				pathname: '/',
 				query: { showLogin: true },
 			})
@@ -35,7 +35,7 @@ const Admin = ({ children }) => {
 	) : loading ? (
 		<>Loading...</>
 	) : (
-		router.push({
+		router.replace({
 			pathname: '/',
 			query: { showLogin: true },
 		})

@@ -8,10 +8,10 @@ import Context from '../Context';
 
 
 const Home = () => {
-	const { showLogin } = useRouter().query
+	const { query } = useRouter()
 	const { setLoginShow }: any = useContext(Context)
 
-	useEffect(() => { if (showLogin) setLoginShow(true) }, [])
+	useEffect(() => { if (query.showLogin) setLoginShow(true) }, [])
 
 	return (
 		<>
