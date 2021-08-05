@@ -1,14 +1,15 @@
-import Axios from 'axios';
-import Link from 'next/link';
-import Router from 'next/router';
-import Image from 'next/image'
-import { Container, Row, Col, Button, InputGroup, Spinner } from 'react-bootstrap'
+import Axios from 'axios'
+import { useRouter } from 'next/router'
+import { Container, Card, Spinner, Row, Col, Button, InputGroup } from 'react-bootstrap'
 import { At } from 'react-bootstrap-icons'
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import * as Yup from 'yup';
-import { BsFormik } from '../components'
+import { BsFormik } from '../../../components'
+import useFetch from '../../../hooks/useFetch'
 
-const Register = () => {
+const Artist = () => {
+   const { query } = useRouter()
+   const { data: artist, loading } = useFetch(`/artists/${query.username}`)
 
    const initialValues = {
       firstName: "",
@@ -16,8 +17,18 @@ const Register = () => {
       username: "",
       email: "",
       phone: "",
-      password: "",
-      passwordConfirm: ''
+      dateOfBirth: '',
+      aadhar: "",
+      meta: {
+         genre: [],
+         events: [],
+      },
+      verification: {
+         email: false,
+         phone: false,
+         profile: false
+      },
+      youtubeLinks: []
 
    };
    const validationSchema = Yup.object().shape({
@@ -27,40 +38,29 @@ const Register = () => {
          .min(8, 'Password is too short - should be 8 chars minimum.'),
    });
 
-   const signup = (values: any) => {
-      const { email, password } = values;
-      Axios.post('/signup', values)
-         .then((r) => {
-            localStorage.setItem(
-               'auth-token',
-               r.headers.authorization.split(' ')[1]
-            );
-            window.location.replace("/");
-
-         })
-         .catch(console.error);
+   const updateProfile = (values: any) => {
+      console.log(values)
    };
 
-   return (
-      <div id="signup">
+   // firstName,
+   // lastName,
+   // username,
+   // email,
+   // phone,
+   // dateOfBirth,
+   // address,
+   // aadhar,
+   // youtubeLinks,
+   // meta,
+   // verification
 
-         <h1 className='text-end text-light py-4 px-2'>Sign Up as Artist</h1>
-         <div id="form" className='m-0 p-xs-2 p-4 '>
-            <p>
-               <small>
-                  Already registered?{' '}
-                  <Link href={{
-                     pathname: '/',
-                     query: { showLogin: true }
-                  }} passHref >
-                     <a><b>Login</b></a>
-                  </Link>
-               </small>
-            </p>
+   return (
+      <Container>
+         <Card>
             <Formik
                initialValues={initialValues}
                validationSchema={validationSchema}
-               onSubmit={signup}
+               onSubmit={updateProfile}
                validateOnBlur
             >
                {({ values, errors, touched, isSubmitting }) => (
@@ -119,19 +119,18 @@ const Register = () => {
                         <Col xs='12' sm='6'>
                            <BsFormik
                               className='mb-3'
-                              name="password"
-                              label="Password"
-                              type='password'
-                              isInvalid={errors.password && touched.password}
+                              name="dateOfBirth"
+                              label="Date of Birth"
+                              type='dateOfBirth'
+                              isInvalid={errors.dateOfBirth && touched.dateOfBirth}
                            />
                         </Col>
                         <Col xs='12' sm='6'>
                            <BsFormik
                               className='mb-3'
-                              name="passwordConfirm"
-                              label="Confirm Password"
-                              type='password'
-                              isInvalid={errors.passwordConfirm && touched.passwordConfirm}
+                              name="aadhar"
+                              label="Aadhar Number"
+                              isInvalid={errors.aadhar && touched.aadhar}
                            />
                         </Col>
                      </Row>
@@ -142,27 +141,16 @@ const Register = () => {
                         disabled={isSubmitting}
                         style={{ width: '100%' }}
                      >
-                        {isSubmitting ? (
-                           <Spinner animation="border" variant="light" size="sm" />
-                        ) : (
-                           'Signup'
-                        )}
+                        Go Ahead!
                      </Button>
 
                   </FormikForm>
                )}
             </Formik>
-         </div>
-
-         {/* <Container >
-            <Row>
-               <Col xs sm={{ span: 10, offset: 2 }} lg={{ span: 4, offset: 8 }} className='bg-light'>
-
-               </Col>
-            </Row>
-         </Container> */}
-      </div>
+         </Card></Container>
    )
 }
 
-export default Register
+Artist.layout = 'ADMIN'
+
+export default Artist

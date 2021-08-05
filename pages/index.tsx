@@ -1,15 +1,17 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Badge, Spinner } from 'react-bootstrap';
 import { Artist } from '../components'
 import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import Context from '../Context';
+import useFetch from '../hooks/useFetch';
 
 
 const Home = () => {
 	const { query } = useRouter()
 	const { setLoginShow }: any = useContext(Context)
+	const { data: artists, loading } = useFetch('/artists')
 
 	useEffect(() => { if (query.showLogin) setLoginShow(true) }, [])
 
@@ -72,9 +74,19 @@ const Home = () => {
 					<h2>Featured Artists</h2>
 				</div>
 				<Row>
-					{artists.map((artist: any, key) => (<Col key={key} xs={12} sm={6} lg={4} xl='auto'>
-						<Artist img={artist.img} name={artist.name} desc={artist.desc} categories={artist.categories} link={artist.link} />
-					</Col>))}</Row>
+					{loading ?
+						<Spinner
+							animation="border"
+							role="status"
+							variant="primary"
+						>
+							<span className="visually-hidden">Loading...</span>
+						</Spinner>
+						: artists.map((itr: any, key) => (
+							<Col key={key} xs={12} sm={6} lg={4} xl='auto'>
+								<Artist img={itr.imgUrl} name={`${itr.firstName} ${itr.lastName}`} categories={itr.categories} link={itr.link} />
+							</Col>
+						))}</Row>
 			</Container>
 		</>
 	);
@@ -84,8 +96,8 @@ Home.layout = 'STANDARD'
 
 export default Home
 
-const artists = [
-	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
-	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
-	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
-]
+// const artists = [
+// 	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
+// 	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
+// 	{ name: 'Priyaansh Shah', desc: '', img: '/priyaansh.jpg', categories: ['Bollywood', 'Garba'], link: '/artists/2' },
+// ]

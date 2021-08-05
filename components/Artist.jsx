@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Card, Button, Badge } from 'react-bootstrap';
 
-export const Artist = ({ img, name, desc, categories, link }) => {
+export const Artist = ({ img, name, categories, link }) => {
 	return (
 		<Card className="artist-card mx-auto my-2 position-relative">
 			<Card.Img variant="top" src={img} />
@@ -15,7 +15,6 @@ export const Artist = ({ img, name, desc, categories, link }) => {
 			<Card.Body>
 				<Card.Title>{name}</Card.Title>
 				<Card.Text>
-					{desc}
 					<br />
 					{categories.map((i, key) => (
 						<Badge key={key} bg="secondary" className="me-1">

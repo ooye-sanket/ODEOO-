@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import Link from 'next/link';
 import Router from 'next/router';
 import { useContext } from 'react';
-import { Offcanvas, Button, Form, Modal } from 'react-bootstrap';
+import { Offcanvas, Button, Form, Modal, Spinner } from 'react-bootstrap';
 import * as Yup from 'yup';
 import Context from '../Context';
 import { BsFormik } from '../components';
@@ -82,7 +82,11 @@ export const Login = () => {
 									disabled={isSubmitting}
 									style={{ width: '100%' }}
 								>
-									Login
+									{isSubmitting ? (
+										<Spinner animation="border" variant="light" size="sm" />
+									) : (
+										'Login'
+									)}
 								</Button>
 							</FormikForm>
 						)}
