@@ -17,31 +17,29 @@ const Admin = ({ children }) => {
 	// 	}
 	// }, []);
 
-	if (!!user) {
-		if (user.role === 'ADMIN') {
-			return (
-				<>
-					<AdminNav />
-					<Login />
-					<Container fluid="sm" className="py-3">
-						{children}
-					</Container>
-				</>
-			);
-		} else {
+	return !!user ? (
+		user?.role === 'ADMIN' ? (
+			<>
+				<AdminNav />
+				<Login />
+				<Container fluid="sm" className="py-3">
+					{children}
+				</Container>
+			</>
+		) : (
 			router.push({
 				pathname: '/',
 				query: { showLogin: true },
-			});
-		}
-	} else if (loading) {
-		return <>Loading...</>;
-	} else {
+			})
+		)
+	) : loading ? (
+		<>Loading...</>
+	) : (
 		router.push({
 			pathname: '/',
 			query: { showLogin: true },
-		});
-	}
+		})
+	);
 	return <>Please wait...</>;
 };
 

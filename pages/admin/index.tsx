@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react'
 import { Spinner, Table, Badge } from 'react-bootstrap'
 
 const AdminPage = () => {
-   const [artists, setArtists] = useState([])
-   const [loading, setLoading] = useState(true)
+   const [data, setData] = useState({ loading: true, artists: null });
 
    useEffect(() => {
-      Axios.get('/artists').then((r) => setArtists(r.data.data)).catch(e => console.error(e)).finally(() => setLoading(false))
+      Axios.get('/artists').then((r) =>
+         setData(data => ({ ...data, artists: r.data.data })))
+         .catch(console.error)
+         .finally(() => setData((data) => ({ ...data, loading: false })))
    }, [])
 
    return (
@@ -25,9 +27,9 @@ const AdminPage = () => {
          </thead>
          <tbody>
             {
-               loading ? (
+               data.loading ? (
                   <tr>
-                     <td colSpan={4} className='text-center'>
+                     <td colSpan={6} className='text-center'>
                         <Spinner
                            animation="border"
                            role="status"
@@ -37,7 +39,7 @@ const AdminPage = () => {
                         </Spinner>
                      </td>
                   </tr>
-               ) : artists.length == 0 ?
+               ) : data.artists.length == 0 ?
                   (
                      <tr>
                         <td colSpan={6} className='text-center'>
@@ -45,7 +47,7 @@ const AdminPage = () => {
                         </td>
                      </tr>
                   )
-                  : artists?.map((itr: any) => (
+                  : data.artists?.map((itr: any) => (
                      <tr key={itr._id}>
                         <td>{itr._id}</td>
                         <td>{itr.firstName} {itr.lastName}</td>

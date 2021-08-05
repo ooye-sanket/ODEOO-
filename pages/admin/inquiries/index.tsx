@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
 
 const Inquiries = () => {
-   const [inquiries, setInquiries] = useState([])
-   const [loading, setLoading] = useState(true)
+   const [data, setData] = useState({ loading: true, inquiries: null });
 
    useEffect(() => {
-      Axios.get('/inquiries').then((r) => setInquiries(r.data.data)).catch(e => console.error(e)).finally(() => setLoading(false))
+      Axios.get('/inquiries').then((r) =>
+         setData(data => ({ ...data, inquiries: r.data.data })))
+         .catch(console.error)
+         .finally(() => setData((data) => ({ ...data, loading: false })))
    }, [])
 
    return (
@@ -25,7 +27,7 @@ const Inquiries = () => {
          </thead>
          <tbody>
             {
-               loading ? (
+               data.loading ? (
                   <tr>
                      <td colSpan={7} className='text-center'>
                         <Spinner
@@ -37,7 +39,7 @@ const Inquiries = () => {
                         </Spinner>
                      </td>
                   </tr>
-               ) : inquiries.length == 0 ?
+               ) : data.inquiries.length == 0 ?
                   (
                      <tr>
                         <td colSpan={7} className='text-center'>
@@ -45,7 +47,7 @@ const Inquiries = () => {
                         </td>
                      </tr>
                   )
-                  : inquiries?.map((itr: any) => (
+                  : data.inquiries?.map((itr: any) => (
                      <tr key={itr._id}>
                         <td>{itr.id}</td>
                         <td>{itr.name}</td>

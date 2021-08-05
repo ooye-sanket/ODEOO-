@@ -24,9 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 			if (email) {
 				try {
-					const usr = await User.findOne({ email }, (err: any, obj: any) =>
-						console.log(obj)
-					);
+					const usr = await User.findOne({ email });
 					compare(password, usr.password, (err: any, obj: any) => {
 						if (!err && obj) {
 							const { firstName, lastName, username } = usr;
