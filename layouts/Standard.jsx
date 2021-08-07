@@ -1,7 +1,15 @@
 import { Login, NavBar, Footer } from '../components';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import Context from '../Context';
 
 const Standard = ({ children }) => {
-	return (
+	const { user, loading } = useContext(Context);
+	const router = useRouter();
+
+	return user?.role === 'ADMIN' ? (
+		router.replace('/admin')
+	) : (
 		<>
 			<NavBar />
 			<Login />

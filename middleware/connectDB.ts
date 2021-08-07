@@ -9,19 +9,21 @@ const connectDB =
 			return await handler(req, res);
 		}
 		// Use new db connection
-		await mongoose
-			.connect(process.env.MONGO_URI as any, {
+		try {
+			const connection = await mongoose.connect(process.env.MONGO_URI as any, {
 				useUnifiedTopology: true,
 				// useFindAndModify: false,
 				useCreateIndex: true,
 				useNewUrlParser: true,
-			})
-			.then(() => console.log('🚀 Database Connected'))
-			.catch((err) => {
-				console.error(err);
-				return res.status(500).send('Database is not working :(');
 			});
-		return await handler(req, res);
+			if (connection) {
+				console.log('🚀 Database Connected');
+				return await handler(req, res);
+			}
+		} catch (err) {
+			console.error('DB Error:', err);
+			return res.status(500).send('Database is not working :(');
+		}
 	};
 
 export default connectDB;

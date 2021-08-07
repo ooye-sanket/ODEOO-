@@ -1,8 +1,9 @@
 import { Spinner, Table, Badge } from 'react-bootstrap'
 import useFetch from '../../hooks/useFetch'
+import Link from 'next/link'
 
 const AdminPage = () => {
-   const { data: artists, loading } = useFetch('/artists')
+   const { data: artists, loading } = useFetch('/artists', [])
 
    return (
 
@@ -40,22 +41,24 @@ const AdminPage = () => {
                      </tr>
                   )
                   : artists.map((itr: any) => (
-                     <tr key={itr._id}>
-                        <td>{itr._id}</td>
-                        <td>{itr.firstName} {itr.lastName}</td>
-                        <td>{itr.username}</td>
-                        <td>{itr.email}</td>
-                        <td>{itr.phone}</td>
-                        <td>
-                           <Status label='Email' verified={itr.verification.email} /> &nbsp;
-                           <Status label='Phone' verified={itr.verification.phone} /> &nbsp;
-                           <Status label='Profile' verified={itr.verification.profile} />
-                        </td>
-                     </tr>
+                     <Link href={`/admin/artists/${itr.username}`} key={itr._id}>
+                        <tr >
+                           <td>{itr._id}</td>
+                           <td>{itr.firstName} {itr.lastName}</td>
+                           <td>{itr.username}</td>
+                           <td>{itr.email}</td>
+                           <td>{itr.phone}</td>
+                           <td>
+                              <Status label='Email' verified={itr.verification.email} /> &nbsp;
+                              <Status label='Phone' verified={itr.verification.phone} /> &nbsp;
+                              <Status label='Profile' verified={itr.verification.profile} />
+                           </td>
+                        </tr>
+                     </Link>
                   ))
             }
          </tbody>
-      </Table>
+      </Table >
    )
 }
 

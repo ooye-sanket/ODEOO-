@@ -73,4 +73,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default connectDB(withUser(handler));
+export default withUser(handler);

@@ -1,10 +1,8 @@
-import Axios from 'axios'
-import { useEffect, useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
 import useFetch from '../../../hooks/useFetch'
 
 const Inquiries = () => {
-   const { data: inquiries, loading } = useFetch('/inquiries')
+   const { data: inquiries, loading } = useFetch('/inquiries', [])
 
    return (
       <Table striped bordered hover>

@@ -78,10 +78,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 
 		case 'PUT':
-			if (!password)
+			if (usr?.role !== 'ADMIN' && !password)
 				return res
 					.status(400)
 					.json({ msg: 'Please enter all the required fields' });
+
+			if (usr?.role !== 'ADMIN' && (id || verification))
+				return res.status(401).json({ msg: 'Request unauthorized' });
 
 			if (usr?.role === 'ADMIN' && id) {
 				try {
@@ -97,6 +100,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						imgUrl,
 						youtubeLinks,
 						meta,
+						verification,
 					});
 					return res.status(200).json({
 						msg: 'Profile updated successfully',

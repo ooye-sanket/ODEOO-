@@ -44,6 +44,28 @@
 	}
 }
 
+input[type='checkbox'].chip,
+input[type='radio'].chip {
+	display: none;
+	& + label {
+		display: inline-block;
+		font-weight: 500;
+		font-size: 0.9em;
+		width: fit-content;
+		vertical-align: middle;
+		transition: 0.2s;
+		margin: 0.1em;
+		padding: 0.4em 0.6em;
+		border: 1px solid #555;
+		border-radius: 1.2em;
+	}
+	&:checked + label {
+		background: var(--primary);
+		border-color: var(--primary);
+		color: #fff;
+	}
+}
+
 footer {
 	#logo {
 		background: #fff;

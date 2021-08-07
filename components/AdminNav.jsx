@@ -35,14 +35,19 @@ export const AdminNav = () => {
 				<Nav variant="pills" defaultActiveKey="/admin">
 					<Nav.Item>
 						<Link href="/admin" passHref>
-							<Nav.Link active={router.pathname === '/admin'}>
+							<Nav.Link
+								active={
+									router.pathname === '/admin' ||
+									router.pathname.startsWith('/admin/artists')
+								}
+							>
 								<HouseDoor /> &nbsp; Artists
 							</Nav.Link>
 						</Link>
 					</Nav.Item>
 					<Nav.Item>
 						<Link href="/admin/inquiries" passHref>
-							<Nav.Link active={router.pathname === '/admin/inquiries'}>
+							<Nav.Link active={router.pathname.startsWith('/admin/inquiries')}>
 								<CardList /> &nbsp; Inquiries
 							</Nav.Link>
 						</Link>

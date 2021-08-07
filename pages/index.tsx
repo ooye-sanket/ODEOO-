@@ -10,8 +10,8 @@ import useFetch from '../hooks/useFetch';
 
 const Home = () => {
 	const { query } = useRouter()
-	const { setLoginShow }: any = useContext(Context)
-	const { data: artists, loading } = useFetch('/artists')
+	const { user, setLoginShow }: any = useContext(Context)
+	const { data: artists, loading } = useFetch('/artists', [])
 
 	useEffect(() => { if (query.showLogin) setLoginShow(true) }, [])
 
@@ -74,19 +74,30 @@ const Home = () => {
 					<h2>Featured Artists</h2>
 				</div>
 				<Row>
-					{loading ?
-						<Spinner
-							animation="border"
-							role="status"
-							variant="primary"
-						>
-							<span className="visually-hidden">Loading...</span>
-						</Spinner>
-						: artists.map((itr: any, key) => (
-							<Col key={key} xs={12} sm={6} lg={4} xl='auto'>
-								<Artist img={itr.imgUrl} name={`${itr.firstName} ${itr.lastName}`} categories={itr.categories} link={itr.link} />
-							</Col>
-						))}</Row>
+					{
+						loading ? (
+							<Spinner
+								animation="border"
+								role="status"
+								variant="primary"
+								className='mx-auto'
+							>
+								<span className="visually-hidden">Loading...</span>
+							</Spinner>
+						) : artists.length == 0 ?
+							(
+								<h3>
+									No Artists Found
+								</h3>
+
+							)
+							: artists?.map((itr: any, key: any) => (
+								<Col key={key} xs={12} sm={6} lg={4} xl='auto'>
+									<Artist img={itr.imgUrl} name={`${itr.firstName} ${itr.lastName}`} categories={itr.meta.categories} link={`/artists/${itr.username}`} />
+								</Col>
+							))
+					}
+				</Row>
 			</Container>
 		</>
 	);

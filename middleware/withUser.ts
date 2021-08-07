@@ -28,10 +28,9 @@ const withUser =
 								) {
 									return res
 										.status(302)
-										.writeHead(302, { Location: '/?showLogin=true' })
 										.json({ msg: 'No authorisation token' });
 								}
-								console.error('Authenticate Middleware:', error);
+								console.error('withUser Middleware:', error);
 							}
 						} else
 							return res.status(403).json({ msg: 'No authorisation token' });

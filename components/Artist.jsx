@@ -16,7 +16,7 @@ export const Artist = ({ img, name, categories, link }) => {
 				<Card.Title>{name}</Card.Title>
 				<Card.Text>
 					<br />
-					{categories.map((i, key) => (
+					{categories?.map((i, key) => (
 						<Badge key={key} bg="secondary" className="me-1">
 							{i}
 						</Badge>
