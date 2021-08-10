@@ -21,19 +21,20 @@ const Artist = () => {
       dateOfBirth: artist?.dateOfBirth,
       aadhar: artist?.aadhar,
       meta: {
-         genre: artist?.genre,
-         events: artist?.events,
+         genre: artist?.meta?.genre,
+         events: artist?.meta?.events,
       },
       verification: {
-         email: false,
-         phone: false,
-         profile: false
+         email: artist?.verification?.email,
+         phone: artist?.verification?.phone,
+         profile: artist?.verification?.profile
       },
-      youtubeLinks: artist?.youtubeLinks
+      youtubeLinks: artist?.youtubeLinks || ['', '', '']
 
    };
    const validationSchema = Yup.object().shape({
       email: Yup.string().email('Invalid Email').required('Email is required.'),
+      aadhar: Yup.string().min(12, "Aadhar number cannot be shorter than 12 digits").max(12, 'Aadhar number cannot be longer than 12 digits'),
       youtubeLinks: Yup.array()
          .of(Yup.string().matches(/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?$/, "Invalid youtube link"))
    });
@@ -42,7 +43,7 @@ const Artist = () => {
       console.log(values)
       Axios.put('/user/profile', { ...values, id: artist._id })
          .then((r) => {
-            console.log(r)
+            debugger;
          })
          .catch(console.error);
    };
@@ -61,7 +62,7 @@ const Artist = () => {
 
    return (
       <Container>
-         <Card className='p-3' style={{ paddingBottom: '4em' }}>
+         <Card className='p-3' style={{ paddingBottom: '6em' }}>
             <Formik
                enableReinitialize
                initialValues={initialValues}
@@ -123,10 +124,10 @@ const Artist = () => {
                      <Row>
                         <Col xs='12' sm='6'>
                            <BsFormik
+                              control='date'
                               className='mb-3'
                               name="dateOfBirth"
                               label="Date of Birth"
-                              type='dateOfBirth'
                            />
                         </Col>
                         <Col xs='12' sm='6'>
@@ -202,7 +203,6 @@ const Artist = () => {
                         type="submit"
                         size='lg'
                         disabled={isSubmitting}
-                        style={{ float: 'right' }}
                      >
                         Update Profile
                      </Button>

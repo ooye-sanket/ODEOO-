@@ -2981,6 +2981,11 @@ raw-body@2.4.1:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+react-bootstrap-date-picker@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-date-picker/-/react-bootstrap-date-picker-5.1.0.tgz#5f87c6a875e411dbf46d2be74960756f113ebf23"
+  integrity sha1-X4fGqHXkEdv0bSvnSWB1bxE+vyM=
+
 react-bootstrap-icons@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/react-bootstrap-icons/-/react-bootstrap-icons-1.5.0.tgz#30ccd09cac69e4037c4cb500cc704d04c4a466a4"

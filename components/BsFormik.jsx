@@ -9,6 +9,8 @@ export const BsFormik = (props) => {
 			return <CheckBox {...rest} />;
 		case 'chips':
 			return <Chips {...rest} />;
+		case 'date':
+			return <Date {...rest} />;
 		default:
 			return <Input {...rest} />;
 	}
@@ -33,14 +35,47 @@ const Input = ({ label, name, className, ...rest }) => {
 				</Field>
 				<ErrorMessage
 					name={name}
-					render={(msg) => (
+					// component="small"
+					className="invalid-feedback"
+				>
+					{(msg) => (
 						<Form.Control.Feedback type="invalid" tooltip>
 							{msg}
 						</Form.Control.Feedback>
 					)}
-					// component="small"
-					className="invalid-feedback"
-				/>
+				</ErrorMessage>
+			</FloatingLabel>
+		</div>
+	);
+};
+const Date = ({ label, name, className, ...rest }) => {
+	return (
+		<div className={className}>
+			{/* <Form.Label>{label}</Form.Label> */}
+			<FloatingLabel controlId={`floating-${name}`} label={label}>
+				<Field name={name}>
+					{({ field, meta: { touched, error } }) => (
+						<input
+							className="form-control"
+							type="date"
+							placeholder={label}
+							value={field.value}
+							onChange={(e) =>
+								setFieldValue(name, moment(e.target.value).format('DD-MM-YYYY'))
+							}
+							isInvalid={touched && error}
+							{...rest}
+							{...field}
+						/>
+					)}
+				</Field>
+				<ErrorMessage name={name} className="invalid-feedback">
+					{(msg) => (
+						<Form.Control.Feedback type="invalid" tooltip>
+							{msg}
+						</Form.Control.Feedback>
+					)}
+				</ErrorMessage>
 			</FloatingLabel>
 		</div>
 	);
@@ -49,9 +84,19 @@ const Input = ({ label, name, className, ...rest }) => {
 const CheckBox = ({ label, name, error, className, ...rest }) => {
 	return (
 		<div className={className}>
-			{/* <Form.Group controlId="formBasicCheckbox"> */}
-			<Form.Check type="checkbox" label={label} />
-			{/* </Form.Group> */}
+			<Field name={name}>
+				{({ field, meta: { touched, error } }) => (
+					<Form.Check
+						type="checkbox"
+						label={label}
+						checked={field.value}
+						onChange={(e) => setFieldValue(field.name, e.target.value)}
+						isInvalid={touched && error}
+						{...rest}
+						{...field}
+					/>
+				)}
+			</Field>
 		</div>
 	);
 };
@@ -73,8 +118,17 @@ const Chips = ({ label, name, options, ...rest }) => {
 					<label htmlFor={`${name}-${key}`}>{option}</label>
 				</span>
 			))}
-
-			<ErrorMessage as="small" name={name} />
+			<ErrorMessage
+				name={name}
+				// component="small"
+				className="invalid-feedback"
+			>
+				{(msg) => (
+					<Form.Control.Feedback type="invalid" tooltip>
+						{msg}
+					</Form.Control.Feedback>
+				)}
+			</ErrorMessage>
 		</>
 	);
 };

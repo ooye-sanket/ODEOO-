@@ -87,6 +87,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				return res.status(401).json({ msg: 'Request unauthorized' });
 
 			if (usr?.role === 'ADMIN' && id) {
+				console.log('Admin Operation');
 				try {
 					const updatedUsr = await User.findByIdAndUpdate(id, {
 						firstName,
