@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Container, Row, Col, Card, Button, Badge, Spinner } from 'react-bootstrap';
 import { Artist } from '../components'
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import Context from '../Context';
 import useFetch from '../hooks/useFetch';
@@ -12,7 +12,7 @@ const Home = () => {
 	const { query } = useRouter()
 	const { user, setLoginShow }: any = useContext(Context)
 	const { data: artists, loading } = useFetch('/artists', [])
-
+	const [show, setShow] = useState(false)
 	useEffect(() => { if (query.showLogin) setLoginShow(true) }, [])
 
 	return (
@@ -23,7 +23,7 @@ const Home = () => {
 						<Col xs={{ span: 12, order: 'last' }} lg='6'>
 							<h1 className='display-5'>The Ultimate Platform For All Local Artists</h1>
 							<p className='text-muted'>We are team of Talented artists making your event memorable.</p>
-							<Button className='mb-1 me-1'>Post a Requirement</Button>
+							<Button className='mb-1 me-1' >Post a Requirement</Button>
 							<Button className='mb-1 me-1' variant='outline-dark'>Learn More</Button>
 						</Col>
 						<Col xs={{ span: 12, order: 'first' }} lg='6'>
@@ -32,6 +32,7 @@ const Home = () => {
 							</div>
 						</Col>
 					</Row>
+
 				</Container>
 			</Container>
 			<Container className='py-5'>

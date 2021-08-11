@@ -13,7 +13,7 @@ const Admin = ({ children }) => {
 			<div>
 				<AdminNav />
 				<Login />
-				<Container fluid="sm" className="py-3" id="admin-section">
+				<Container className="py-3" id="admin-section">
 					{children}
 				</Container>
 			</div>

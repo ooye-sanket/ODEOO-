@@ -36,7 +36,6 @@ const Input = ({ label, name, className, ...rest }) => {
 				<ErrorMessage
 					name={name}
 					// component="small"
-					className="invalid-feedback"
 				>
 					{(msg) => (
 						<Form.Control.Feedback type="invalid" tooltip>
@@ -55,13 +54,13 @@ const Date = ({ label, name, className, ...rest }) => {
 			<FloatingLabel controlId={`floating-${name}`} label={label}>
 				<Field name={name}>
 					{({ field, meta: { touched, error } }) => (
-						<input
+						<Form.Control
 							className="form-control"
 							type="date"
 							placeholder={label}
-							value={field.value}
+							value={new Date(field.value)}
 							onChange={(e) =>
-								setFieldValue(name, moment(e.target.value).format('DD-MM-YYYY'))
+								setFieldValue(name, moment(e.target.value).format('YYYY-MM-DD'))
 							}
 							isInvalid={touched && error}
 							{...rest}
@@ -69,7 +68,7 @@ const Date = ({ label, name, className, ...rest }) => {
 						/>
 					)}
 				</Field>
-				<ErrorMessage name={name} className="invalid-feedback">
+				<ErrorMessage name={name}>
 					{(msg) => (
 						<Form.Control.Feedback type="invalid" tooltip>
 							{msg}
@@ -101,9 +100,9 @@ const CheckBox = ({ label, name, error, className, ...rest }) => {
 	);
 };
 
-const Chips = ({ label, name, options, ...rest }) => {
+const Chips = ({ label, name, options, className, ...rest }) => {
 	return (
-		<>
+		<div className={className}>
 			<Form.Label>{label}</Form.Label>
 			<br />
 			{options.map((option, key) => (
@@ -121,7 +120,6 @@ const Chips = ({ label, name, options, ...rest }) => {
 			<ErrorMessage
 				name={name}
 				// component="small"
-				className="invalid-feedback"
 			>
 				{(msg) => (
 					<Form.Control.Feedback type="invalid" tooltip>
@@ -129,6 +127,6 @@ const Chips = ({ label, name, options, ...rest }) => {
 					</Form.Control.Feedback>
 				)}
 			</ErrorMessage>
-		</>
+		</div>
 	);
 };

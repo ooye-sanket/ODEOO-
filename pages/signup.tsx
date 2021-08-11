@@ -24,7 +24,11 @@ const Register = () => {
       email: Yup.string().email('Invalid Email').required('Email is required.'),
       password: Yup.string()
          .required('No password provided.')
-         .min(8, 'Password is too short - should be 8 chars minimum.'),
+         .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+         ),
+      passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], "Passwords must match")
    });
 
    const signup = (values: any) => {
