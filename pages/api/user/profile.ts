@@ -36,10 +36,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (req.method) {
 		case 'POST':
 			if (
+				!phone ||
 				!address ||
 				!dateOfBirth ||
 				!aadhar ||
-				!imgUrl ||
 				!youtubeLinks ||
 				!meta
 			)
@@ -50,31 +50,32 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			if (usr?.role !== 'ADMIN' && (id || verification))
 				return res.status(401).json({ msg: 'Request unauthorized' });
 
-			compare(password, usr.password, async (err: any, obj: any) => {
-				if (!err && obj) {
-					try {
-						const updatedUsr = await User.findByIdAndUpdate(usr.id, {
-							address,
-							dateOfBirth,
-							aadhar,
-							imgUrl,
-							youtubeLinks,
-							meta,
-						}).select(
-							'address dateOfBirth aadhar imgUrl youtubeLinks meta.genre meta.events'
-						);
-						return res.status(200).json({
-							msg: 'Profile created successfully',
-							data: updatedUsr,
-						});
-					} catch (err: any) {
-						console.error('Profile Update Error:', err);
-						return res.status(500).json({ msg: 'Something went wrong' });
-					}
-				} else {
-					return res.status(401).json({ msg: 'Password invalid' });
-				}
-			});
+			try {
+				const updatedUsr = await User.findByIdAndUpdate(usr.id, {
+					phone,
+					address,
+					dateOfBirth,
+					aadhar,
+					youtubeLinks,
+					meta,
+				}).select(
+					'phone address dateOfBirth aadhar imgUrl youtubeLinks meta.genre meta.events'
+				);
+				return res.status(200).json({
+					msg: 'Profile created successfully',
+					data: updatedUsr,
+				});
+			} catch (err: any) {
+				console.error('Profile Update Error:', err);
+				return res.status(500).json({ msg: 'Something went wrong' });
+			}
+			// compare(password, usr.password, async (err: any, obj: any) => {
+			// 	if (!err && obj) {
+
+			// 	} else {
+			// 		return res.status(401).json({ msg: 'Password invalid' });
+			// 	}
+			// });
 			break;
 
 		case 'PUT':

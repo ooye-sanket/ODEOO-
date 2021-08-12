@@ -8,15 +8,34 @@ import {
 	Navbar,
 	NavDropdown,
 	Spinner,
+	Card,
 } from 'react-bootstrap';
 import Context from '../Context';
-import { BoxArrowInRight, BoxArrowRight } from 'react-bootstrap-icons';
+import { BoxArrowInRight, BoxArrowRight, X } from 'react-bootstrap-icons';
 
 export const NavBar = () => {
 	const { loading, user, loginShow, setLoginShow } = useContext(Context);
 
 	return (
 		<>
+			{user && !user?.imgUrl && (
+				<Card bg="primary" text="white" className="py-1 rounded-0 text-center">
+					<small>
+						Hi <b>{user?.firstName}</b>, good to see you. We'll be good to go
+						once you{' '}
+						<u style={{ cursor: 'pointer' }}>
+							<Link href="/profile/onboarding" passHref>
+								<a>Update your profile</a>
+							</Link>
+						</u>
+						.
+						{/* <Button class="close" aria-label="Close">
+							<span aria-hidden="true">&times;</span> 
+							<X size={20} className="d-inline-block" />
+						</Button> */}
+					</small>
+				</Card>
+			)}
 			<Navbar
 				collapseOnSelect
 				expand="lg"
@@ -25,24 +44,20 @@ export const NavBar = () => {
 				variant="light"
 			>
 				<Container>
-					<Navbar.Brand href="#home">
-						<img
-							src="/odeo-logo.png"
-							height="48"
-							className="d-inline-block align-middle"
-							alt="React Bootstrap logo"
-						/>
-					</Navbar.Brand>
+					<Link href="/" passHref>
+						<Navbar.Brand>
+							<img
+								src="/odeo-logo.png"
+								height="48"
+								className="d-inline-block align-middle"
+								alt="React Bootstrap logo"
+							/>
+						</Navbar.Brand>
+					</Link>
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
 					<Navbar.Collapse>
 						<Nav as="ul" className="ms-auto">
-							<Nav.Item as="li">
-								<Nav.Link href="/home">Home</Nav.Link>
-							</Nav.Item>
-							<Nav.Item as="li">
-								<Nav.Link eventKey="link-1">Artists</Nav.Link>
-							</Nav.Item>
 							<Nav.Item as="li">
 								<Nav.Link eventKey="link-1">Artists</Nav.Link>
 							</Nav.Item>
@@ -50,13 +65,12 @@ export const NavBar = () => {
 							{user ? (
 								<Nav.Item as="li">
 									<NavDropdown title={user.firstName} align="end">
-										<Link href="/profile" passHref>
-											<NavDropdown.Item>Your Profile</NavDropdown.Item>
-										</Link>
-										<NavDropdown.Item href="#action/3.3">
-											Something
-										</NavDropdown.Item>
-										<NavDropdown.Divider />
+										{user && user?.imgUrl && (
+											<Link href="/profile" passHref>
+												<NavDropdown.Item>Your Profile</NavDropdown.Item>
+											</Link>
+										)}
+										{/* <NavDropdown.Divider /> */}
 										<NavDropdown.Item
 											onClick={() => {
 												localStorage.removeItem('auth-token');

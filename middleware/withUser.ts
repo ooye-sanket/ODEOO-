@@ -15,8 +15,9 @@ const withUser =
 					async (err, decoded) => {
 						if (!err && decoded) {
 							try {
-								const usr = await User.findById(decoded.userId).select(
-									'id firstName lastName username email phone role verification'
+								const usr = await User.findById(
+									decoded.userId,
+									'-password -__v'
 								);
 								// @ts-ignore
 								req.user = usr;

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Container, ListGroup, Button, Badge } from 'react-bootstrap';
+import { Container, Row, Col, ListGroup, Button, Badge } from 'react-bootstrap';
 import Context from '../../Context';
 
 const Profile = () => {
@@ -11,20 +11,23 @@ const Profile = () => {
 
 				<h2>Profile</h2>
 			</div>
-			<ListGroup className='my-3'>
-				<ListGroup.Item> <b>Onboarding Process</b> </ListGroup.Item>
-
-				<StatusListItem verified={user.verification.email}
-				>Email
-				</StatusListItem>
-				<StatusListItem verified={user.verification.phone}
-				>Phone
-				</StatusListItem>
-				<StatusListItem verified={user.verification.phone}
-				>Profile
-				</StatusListItem>
-				<ListGroup.Item></ListGroup.Item>
-			</ListGroup>
+			<Row>
+				<Col lg='4' xs='12'>
+					<ListGroup className='my-3'>
+						<ListGroup.Item><b>Onboarding Process</b></ListGroup.Item>
+						<StatusListItem verified={user.verification.phone}
+						>Profile
+						</StatusListItem>
+						<StatusListItem verified={user.verification.email}
+						>Email
+						</StatusListItem>
+						<StatusListItem verified={user.verification.phone}
+						>Phone
+						</StatusListItem>
+						<ListGroup.Item></ListGroup.Item>
+					</ListGroup>
+				</Col>
+			</Row>
 
 		</Container>
 	);
@@ -36,7 +39,7 @@ export default Profile;
 const StatusListItem = ({ verified, children }: any) => {
 
 	return (
-		<ListGroup.Item>{children} &nbsp; <Badge bg={verified ? 'success' : 'danger'}>{verified ? 'VERIFIED' : 'NOT VERIFIED'}</Badge></ListGroup.Item>
+		<ListGroup.Item><Badge bg={verified ? 'success' : 'danger'}>{verified ? 'VERIFIED' : 'NOT VERIFIED'}</Badge>&nbsp;{children}</ListGroup.Item>
 
 	)
 }

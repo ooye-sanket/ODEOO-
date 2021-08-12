@@ -5,6 +5,8 @@ import moment from 'moment';
 export const BsFormik = (props) => {
 	const { control, ...rest } = props;
 	switch (control) {
+		case 'textarea':
+			return <TextArea {...rest} />;
 		case 'checkbox':
 			return <CheckBox {...rest} />;
 		case 'chips':
@@ -24,6 +26,39 @@ const Input = ({ label, name, className, ...rest }) => {
 				<Field name={name}>
 					{({ field, meta: { touched, error } }) => (
 						<Form.Control
+							placeholder={label}
+							value={field.value}
+							onChange={(e) => setFieldValue(field.name, e.target.value)}
+							isInvalid={touched && error}
+							{...rest}
+							{...field}
+						/>
+					)}
+				</Field>
+				<ErrorMessage
+					name={name}
+					// component="small"
+				>
+					{(msg) => (
+						<Form.Control.Feedback type="invalid" tooltip>
+							{msg}
+						</Form.Control.Feedback>
+					)}
+				</ErrorMessage>
+			</FloatingLabel>
+		</div>
+	);
+};
+const TextArea = ({ label, name, className, ...rest }) => {
+	return (
+		<div className={className}>
+			{/* <Form.Label>{label}</Form.Label> */}
+			<FloatingLabel controlId={`floating-${name}`} label={label}>
+				<Field name={name}>
+					{({ field, meta: { touched, error } }) => (
+						<Form.Control
+							as="textarea"
+							style={{ height: '120px' }}
 							placeholder={label}
 							value={field.value}
 							onChange={(e) => setFieldValue(field.name, e.target.value)}
