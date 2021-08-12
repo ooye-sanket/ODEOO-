@@ -18,6 +18,7 @@ const Artist = () => {
       lastName: artist?.lastName,
       username: artist?.username,
       email: artist?.email,
+      address: artist?.address || undefined,
       phone: artist?.phone,
       dateOfBirth: moment(artist?.dateOfBirth).format('YYYY-MM-DD'),
       aadhar: artist?.aadhar,
@@ -164,7 +165,6 @@ const Artist = () => {
                               label="Phone No."
                            />
                         </Col>
-
                         <Col xs='12' sm='6'>
                            <BsFormik
                               className='mb-3'
@@ -174,7 +174,17 @@ const Artist = () => {
                            />
                         </Col>
                      </Row>
-
+                     <Row>
+                        <Col >
+                           <BsFormik
+                              className='mb-3'
+                              control='textarea'
+                              name="address"
+                              label="Address"
+                              isInvalid={errors.address && touched.address}
+                           />
+                        </Col>
+                     </Row>
                      <Form.Label>Youtube Links</Form.Label>
                      <FieldArray
                         name="youtubeLinks"

@@ -67,7 +67,7 @@ export const NavBar = () => {
 									<NavDropdown title={user.firstName} align="end">
 										{user && user?.imgUrl && (
 											<Link href="/profile" passHref>
-												<NavDropdown.Item>Your Profile</NavDropdown.Item>
+												<NavDropdown.Item>My Profile</NavDropdown.Item>
 											</Link>
 										)}
 										{/* <NavDropdown.Divider /> */}

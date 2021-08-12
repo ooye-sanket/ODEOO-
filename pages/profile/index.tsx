@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Container, Row, Col, ListGroup, Button, Badge } from 'react-bootstrap';
 import Context from '../../Context';
+import { UpdateProfile } from '../../components'
 
 const Profile = () => {
 	const { user }: any = useContext(Context)
@@ -8,12 +9,11 @@ const Profile = () => {
 	return (
 		<Container>
 			<div className="section-title">
-
 				<h2>Profile</h2>
 			</div>
 			<Row>
-				<Col lg='4' xs='12'>
-					<ListGroup className='my-3'>
+				<Col lg='3' xs='12'>
+					<ListGroup className='my-2'>
 						<ListGroup.Item><b>Onboarding Process</b></ListGroup.Item>
 						<StatusListItem verified={user.verification.phone}
 						>Profile
@@ -26,6 +26,9 @@ const Profile = () => {
 						</StatusListItem>
 						<ListGroup.Item></ListGroup.Item>
 					</ListGroup>
+				</Col>
+				<Col lg='9' xs='12'>
+					<UpdateProfile />
 				</Col>
 			</Row>
 
