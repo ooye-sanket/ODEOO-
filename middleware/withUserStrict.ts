@@ -15,7 +15,7 @@ const withUserStrict =
 					if (!err && decoded) {
 						try {
 							const usr = await User.findById(decoded.userId).select(
-								'id username email password role'
+								'_id username email password role'
 							);
 							// @ts-ignore
 							req.user = usr;

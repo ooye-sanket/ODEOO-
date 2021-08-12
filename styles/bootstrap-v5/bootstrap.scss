@@ -1,5 +1,4 @@
 $primary: #4c4dbd;
-$secondary: #ff7c1a;
 $dark: #1f1c19;
 $border-radius-sm: 1.2em;
 $border-radius: 1.2em;
@@ -20,4 +19,5 @@ body {
 
 .modal-backdrop {
 	background-color: $dark;
+	z-index: 1045;
 }

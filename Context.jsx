@@ -9,6 +9,7 @@ export default Context;
 // Provider
 export const Provider = ({ children }) => {
 	const [loginShow, setLoginShow] = useState(false);
+	const [pswdModal, setPswdModal] = useState(false);
 	const [data, setData] = useState({ loading: true, user: null });
 
 	useEffect(() => {
@@ -34,6 +35,8 @@ export const Provider = ({ children }) => {
 				setLoginShow,
 				loading: data.loading,
 				user: data.user,
+				pswdModal,
+				setPswdModal,
 			}}
 		>
 			{children}

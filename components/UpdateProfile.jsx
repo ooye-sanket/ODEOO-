@@ -22,7 +22,7 @@ import Context from '../Context';
 
 export const UpdateProfile = () => {
 	const router = useRouter();
-	const { loading, user } = useContext(Context);
+	const { data: user, loading } = useFetch('/user?all=true', {});
 
 	const initialValues = {
 		firstName: user?.firstName,

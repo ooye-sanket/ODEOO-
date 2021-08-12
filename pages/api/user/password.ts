@@ -3,11 +3,15 @@ import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../../middleware/connectDB';
 import cors from '../../../middleware/cors';
+import withUserStrict from '../../../middleware/withUserStrict';
 import { User } from '../../../models/User';
 import runMiddleware from '../../../utils/runMiddleware';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
+
+	// @ts-ignore
+	const usr = req.user;
 
 	switch (req.method) {
 		case 'PUT':
@@ -19,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 			if (
 				(action == 'change' &&
-					(!email || !password || !newPassword || !passwordConfirm)) ||
+					(!password || !newPassword || !passwordConfirm)) ||
 				(action == 'reset' && !email)
 			)
 				return res
@@ -33,10 +37,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					return res.status(400).json({ msg: 'Please create a new password' });
 
 				try {
-					const usr = await User.findOne({ email }).select(
-						'-firstName -lastName -dateOfBirth -address -phone -__v'
-					);
-
 					compare(password, usr.password, async (err: any, obj: any) => {
 						if (!err && obj) {
 							const { id } = usr;
@@ -69,4 +69,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default connectDB(handler);
+export default connectDB(withUserStrict(handler));

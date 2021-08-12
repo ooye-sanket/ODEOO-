@@ -17,7 +17,7 @@ const withUser =
 							try {
 								const usr = await User.findById(
 									decoded.userId,
-									'-password -__v'
+									'_id firstName lastName username email role verification'
 								);
 								// @ts-ignore
 								req.user = usr;

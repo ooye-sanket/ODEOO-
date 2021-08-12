@@ -1,13 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Container, Row, Col, ListGroup, Button, Badge } from 'react-bootstrap';
 import Context from '../../Context';
-import { UpdateProfile } from '../../components'
+import { PasswordModal, UpdateProfile } from '../../components'
 
 const Profile = () => {
-	const { user }: any = useContext(Context)
+	const { user, setPswdModal }: any = useContext(Context)
 
 	return (
-		<Container>
+		<><Container>
 			<div className="section-title">
 				<h2>Profile</h2>
 			</div>
@@ -26,13 +26,16 @@ const Profile = () => {
 						</StatusListItem>
 						<ListGroup.Item></ListGroup.Item>
 					</ListGroup>
+					<Button onClick={() => setPswdModal(true)}>
+						Change Password
+					</Button>
 				</Col>
 				<Col lg='9' xs='12'>
 					<UpdateProfile />
 				</Col>
 			</Row>
-
 		</Container>
+			<PasswordModal /></>
 	);
 };
 

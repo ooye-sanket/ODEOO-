@@ -19,13 +19,13 @@ export const NavBar = () => {
 	return (
 		<>
 			{user && !user?.imgUrl && (
-				<Card bg="primary" text="white" className="py-1 rounded-0 text-center">
+				<div className="py-1 rounded-0 text-center bg-secondary text-white">
 					<small>
-						Hi <b>{user?.firstName}</b>, good to see you. We'll be good to go
+						Hi <b>{user?.firstName}</b>, great to see you. We'll be good to go
 						once you{' '}
 						<u style={{ cursor: 'pointer' }}>
 							<Link href="/profile/onboarding" passHref>
-								<a>Update your profile</a>
+								<a>Complete your profile</a>
 							</Link>
 						</u>
 						.
@@ -34,7 +34,7 @@ export const NavBar = () => {
 							<X size={20} className="d-inline-block" />
 						</Button> */}
 					</small>
-				</Card>
+				</div>
 			)}
 			<Navbar
 				collapseOnSelect
@@ -67,7 +67,7 @@ export const NavBar = () => {
 									<NavDropdown title={user.firstName} align="end">
 										{user && user?.imgUrl && (
 											<Link href="/profile" passHref>
-												<NavDropdown.Item>My Profile</NavDropdown.Item>
+												<NavDropdown.Item>My Accounts</NavDropdown.Item>
 											</Link>
 										)}
 										{/* <NavDropdown.Divider /> */}
