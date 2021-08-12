@@ -41,7 +41,7 @@ const AdminPage = () => {
                      </tr>
                   )
                   : artists.map((itr: any) => (
-                     <Link href={`/admin/artists/${itr.username}`} key={itr._id}>
+                     <Link href={`/admin/artists/${itr.username}`} passHref key={itr._id}>
                         <tr >
                            <td>{itr._id}</td>
                            <td>{itr.firstName} {itr.lastName}</td>

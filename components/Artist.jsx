@@ -22,7 +22,7 @@ export const Artist = ({ img, name, categories, link }) => {
 						</Badge>
 					))}
 				</Card.Text>
-				<Link href={link}>
+				<Link href={link} passHref>
 					<Button size="sm" className="d-block ms-auto" variant="primary">
 						Learn more
 					</Button>

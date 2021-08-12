@@ -21,8 +21,8 @@ export const NavBar = () => {
 			{user && !user?.imgUrl && (
 				<div className="py-1 rounded-0 text-center bg-secondary text-white">
 					<small>
-						Hi <b>{user?.firstName}</b>, great to see you. We'll be good to go
-						once you{' '}
+						Hi <b>{user?.firstName}</b>, great to see you. We&#39;ll be good to
+						go once you{' '}
 						<u style={{ cursor: 'pointer' }}>
 							<Link href="/profile/onboarding" passHref>
 								<a>Complete your profile</a>

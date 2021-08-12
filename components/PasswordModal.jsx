@@ -94,9 +94,7 @@ export const PasswordModal = () => {
 						<Modal.Footer>
 							<Button
 								variant="primary"
-								variant="secondary"
 								className="d-block ms-auto"
-								variant="success"
 								type="submit"
 								// size='lg'
 								disabled={isSubmitting}
