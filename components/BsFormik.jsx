@@ -7,10 +7,14 @@ export const BsFormik = (props) => {
 	switch (control) {
 		case 'textarea':
 			return <TextArea {...rest} />;
+		case 'select':
+			return <Select {...rest} />;
 		case 'checkbox':
 			return <CheckBox {...rest} />;
-		case 'chips':
-			return <Chips {...rest} />;
+		case 'checkbox-chips':
+			return <CheckBoxChips {...rest} />;
+		case 'radio-chips':
+			return <RadioChips {...rest} />;
 		case 'date':
 			return <Date {...rest} />;
 		default:
@@ -49,6 +53,7 @@ const Input = ({ label, name, className, ...rest }) => {
 		</div>
 	);
 };
+
 const TextArea = ({ label, name, className, ...rest }) => {
 	return (
 		<div className={className}>
@@ -82,6 +87,7 @@ const TextArea = ({ label, name, className, ...rest }) => {
 		</div>
 	);
 };
+
 const Date = ({ label, name, className, ...rest }) => {
 	return (
 		<div className={className}>
@@ -93,7 +99,7 @@ const Date = ({ label, name, className, ...rest }) => {
 							className="form-control"
 							type="date"
 							placeholder={label}
-							value={new Date(field.value)}
+							value={field.value}
 							onChange={(e) =>
 								setFieldValue(name, moment(e.target.value).format('YYYY-MM-DD'))
 							}
@@ -104,6 +110,32 @@ const Date = ({ label, name, className, ...rest }) => {
 					)}
 				</Field>
 				<ErrorMessage name={name}>
+					{(msg) => (
+						<Form.Control.Feedback type="invalid" tooltip>
+							{msg}
+						</Form.Control.Feedback>
+					)}
+				</ErrorMessage>
+			</FloatingLabel>
+		</div>
+	);
+};
+
+const Select = ({ label, name, options, className, ...rest }) => {
+	return (
+		<div className={className}>
+			<FloatingLabel controlId={`floating-${name}`} label={label}>
+				<Form.Select name={name}>
+					{options.map((option, key) => (
+						<option key={key} value={option}>
+							{option}
+						</option>
+					))}
+				</Form.Select>
+				<ErrorMessage
+					name={name}
+					// component="small"
+				>
 					{(msg) => (
 						<Form.Control.Feedback type="invalid" tooltip>
 							{msg}
@@ -135,7 +167,7 @@ const CheckBox = ({ label, name, error, className, ...rest }) => {
 	);
 };
 
-const Chips = ({ label, name, options, className, ...rest }) => {
+const CheckBoxChips = ({ label, name, options, className, ...rest }) => {
 	return (
 		<div className={className}>
 			<Form.Label>{label}</Form.Label>
@@ -144,6 +176,36 @@ const Chips = ({ label, name, options, className, ...rest }) => {
 				<span key={key}>
 					<Field
 						type="checkbox"
+						name={name}
+						className="chip"
+						id={`${name}-${key}`}
+						value={option}
+					/>
+					<label htmlFor={`${name}-${key}`}>{option}</label>
+				</span>
+			))}
+			<ErrorMessage
+				name={name}
+				// component="small"
+			>
+				{(msg) => (
+					<Form.Control.Feedback type="invalid" tooltip>
+						{msg}
+					</Form.Control.Feedback>
+				)}
+			</ErrorMessage>
+		</div>
+	);
+};
+const RadioChips = ({ label, name, options, className, ...rest }) => {
+	return (
+		<div className={className}>
+			<Form.Label>{label}</Form.Label>
+			<br />
+			{options.map((option, key) => (
+				<span key={key}>
+					<Field
+						type="radio"
 						name={name}
 						className="chip"
 						id={`${name}-${key}`}

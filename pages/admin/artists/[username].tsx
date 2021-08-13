@@ -218,7 +218,7 @@ const Artist = () => {
                      <ErrorMessage name='youtubeLinks' component='small' className='text-danger' />
 
                      <BsFormik
-                        control='chips'
+                        control='checkbox-chips'
                         className='mb-3'
                         name='meta.genre'
                         label="Genre"
@@ -226,7 +226,7 @@ const Artist = () => {
                      />
 
                      <BsFormik
-                        control='chips'
+                        control='checkbox-chips'
                         className='mb-3'
                         name='meta.events'
                         label="Events"

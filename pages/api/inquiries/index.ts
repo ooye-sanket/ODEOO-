@@ -42,6 +42,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				city,
 				state,
 				country,
+				artist,
 			} = req.body;
 
 			if (
@@ -71,6 +72,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					country,
 					state,
 					city,
+					artist,
 				});
 
 				const createdInq = await newInq.save();
@@ -89,6 +91,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						country: createdInq.country,
 						state: createdInq.state,
 						city: createdInq.city,
+						artist: createdInq.artist,
 					},
 				});
 			} catch (err) {

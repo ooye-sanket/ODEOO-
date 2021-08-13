@@ -179,7 +179,7 @@ const Onboarding = () => {
                         className='mb-3'
                      >
                         <BsFormik
-                           control='chips'
+                           control='checkbox-chips'
                            name='meta.genre'
                            label="Genre"
                            options={Object.values(Genre)}
@@ -190,7 +190,7 @@ const Onboarding = () => {
                         className='mb-3'
                      >
                         <BsFormik
-                           control='chips'
+                           control='checkbox-chips'
                            name='meta.events'
                            label="Events"
                            options={Object.values(Event)}
