@@ -10,10 +10,10 @@ import useFetch from '../hooks/useFetch';
 
 const Home = () => {
 	const { query } = useRouter()
-	const { user, setLoginShow }: any = useContext(Context)
+	const { user, loginShow, setLoginShow }: any = useContext(Context)
 	const { data: artists, loading } = useFetch('/artists', [])
 	const [show, setShow] = useState(false)
-	useEffect(() => { if (query.showLogin) setLoginShow(true) }, [])
+	useEffect(() => { if (query.showLogin) setLoginShow(loginShow => true) }, [])
 
 	return (
 		<>
