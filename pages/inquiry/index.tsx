@@ -1,18 +1,19 @@
 import Axios from 'axios'
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import { Container, Card, Spinner, Row, Col, Button, InputGroup, Form, Nav } from 'react-bootstrap'
 import { Envelope, Cash } from 'react-bootstrap-icons'
-import { ErrorMessage, Form as FormikForm, Formik } from 'formik';
+import { FieldArray, ErrorMessage, Form as FormikForm, Formik } from 'formik';
 import * as Yup from 'yup';
 import { BsFormik } from '../../components'
 import useFetch from '../../hooks/useFetch'
 import { Genre, Event } from '../../@types'
 import moment from 'moment';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Context from '../../Context';
 
 const Inquiry = () => {
    const router = useRouter()
+   const { loading, user, loginShow, setLoginShow }: any = useContext(Context);
    const [step, setStep] = useState(1)
    const { data: artist }: any = useFetch(`/artists/${router.query?.artist}`, {});
 
