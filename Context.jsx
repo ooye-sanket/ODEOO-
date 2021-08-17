@@ -11,6 +11,7 @@ export const Provider = ({ children }) => {
 	const [loginShow, setLoginShow] = useState(false);
 	const [pswdModal, setPswdModal] = useState(false);
 	const [data, setData] = useState({ loading: true, user: null });
+	const [alerts, setAlerts] = useState([]);
 
 	useEffect(() => {
 		const getUser = async () => {

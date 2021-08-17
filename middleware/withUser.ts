@@ -17,20 +17,14 @@ const withUser =
 							try {
 								const usr = await User.findById(
 									decoded.userId,
-									'_id firstName lastName username email role verification'
+									'_id firstName lastName username email role verification img.url'
 								);
 								// @ts-ignore
 								req.user = usr;
 								return await handler(req, res);
 							} catch (error) {
-								if (
-									// @ts-ignore
-									req.headers.referer.split('/')[3] == ('admin' || 'profile')
-								) {
-									return res
-										.status(302)
-										.json({ msg: 'No authorisation token' });
-								}
+								return res.status(302).json({ msg: 'No authorisation token' });
+
 								console.error('withUser Middleware:', error);
 							}
 						} else

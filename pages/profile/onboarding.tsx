@@ -40,12 +40,10 @@ const Onboarding = () => {
                }
             }
          ),
-      phone: Yup.number()
+      phone: Yup.string()
          .required('Phone no. is required.')
-         .typeError("Doesn't look like a Phone no.")
-         .positive("Phone no. can't start with a minus")
-         .integer("Phone no. can't include a decimal point")
-         .min(8),
+         .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+            , 'Invalid Phone Number'),
       address: Yup.string().required('Address is required.')
          .typeError("Doesn't look like an address"),
       dateOfBirth: Yup.string().test(

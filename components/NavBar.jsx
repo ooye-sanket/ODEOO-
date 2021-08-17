@@ -18,7 +18,7 @@ export const NavBar = () => {
 
 	return (
 		<>
-			{user && !user?.imgUrl && (
+			{user && !user?.img?.url && (
 				<div className="py-1 rounded-0 text-center bg-secondary text-white">
 					<small>
 						Hi <b>{user?.firstName}</b>, great to see you. We&#39;ll be good to
@@ -65,9 +65,9 @@ export const NavBar = () => {
 							{user ? (
 								<Nav.Item as="li">
 									<NavDropdown title={user.firstName} align="end">
-										{user && user?.imgUrl && (
+										{user && user?.img?.url && (
 											<Link href="/profile" passHref>
-												<NavDropdown.Item>My Accounts</NavDropdown.Item>
+												<NavDropdown.Item>My Account</NavDropdown.Item>
 											</Link>
 										)}
 										{/* <NavDropdown.Divider /> */}

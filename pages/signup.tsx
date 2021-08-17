@@ -28,7 +28,11 @@ const Register = () => {
       //    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
       //    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
       // ),
-      passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], "Passwords must match")
+      passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], "Passwords must match"),
+      phone: Yup.string()
+         .required('Phone no. is required.')
+         .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+            'Invalid Phone Number'),
    });
 
    const signup = (values: any) => {

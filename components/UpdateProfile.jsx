@@ -41,11 +41,12 @@ export const UpdateProfile = () => {
 	};
 	const validationSchema = Yup.object().shape({
 		email: Yup.string().email('Invalid Email').required('Email is required.'),
-		phone: Yup.number()
-			.typeError("Doesn't look like a Phone no.")
-			.positive("Phone no. can't start with a minus")
-			.integer("Phone no. can't include a decimal point")
-			.min(8),
+		phone: Yup.string()
+			.required('Phone no. is required.')
+			.matches(
+				/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+				'Invalid Phone Number'
+			),
 		dateOfBirth: Yup.string()
 			.test(
 				'dateOfBirth',

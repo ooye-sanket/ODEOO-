@@ -12,7 +12,7 @@ const connectDB =
 		try {
 			const connection = await mongoose.connect(process.env.MONGO_URI as any, {
 				useUnifiedTopology: true,
-				// useFindAndModify: false,
+				useFindAndModify: false,
 				useCreateIndex: true,
 				useNewUrlParser: true,
 			});

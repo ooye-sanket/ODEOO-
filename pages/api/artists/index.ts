@@ -46,7 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			const select =
 				usr?.role === 'ADMIN'
 					? '-password'
-					: 'firstName lastName username meta.genre';
+					: 'firstName lastName username meta.genre img.url';
 
 			try {
 				const artists = await User.find(query, select);

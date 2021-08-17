@@ -69,7 +69,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "Context.jsx"  ],
+, "Context.jsx", "utils/s3.Js"  ],
   "exclude": [
     "node_modules"
   ]

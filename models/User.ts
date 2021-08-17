@@ -43,9 +43,10 @@ const UserSchema = new Schema(
 		phone: { type: String, required: true, unique: true },
 		password: String,
 		dateOfBirth: String,
+		description: String,
 		address: String,
 		aadhar: String,
-		imgUrl: String,
+		img: { url: String, _key: String },
 		youtubeLinks: [String],
 		meta: {
 			genre: { type: [String], enum: Object.values(Genre) },

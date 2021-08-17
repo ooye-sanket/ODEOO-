@@ -1,4 +1,4 @@
-import { sign, verify } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import cors from '../../../middleware/cors';
 import { User } from '../../../models';
