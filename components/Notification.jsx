@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container, Alert } from 'react-bootstrap';
 
-export const Alert = () => {
+export const Notification = () => {
 	const [list, setList] = useState([]);
 	return list.length === 0 ? null : (
 		<Container>
