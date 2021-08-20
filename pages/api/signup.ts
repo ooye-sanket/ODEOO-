@@ -6,6 +6,7 @@ import { sign } from 'jsonwebtoken';
 import { hash } from 'bcrypt';
 import { User, IUser } from '../../models';
 import { capitalise } from '../../utils/helpers';
+import { verifyEmail } from '../../utils/sendEmail';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
@@ -60,6 +61,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						process.env.JWT_SECRET,
 						{ expiresIn: '7d' }
 					);
+
+					const emailToken = sign(
+						{ idToBeVerified: createdUsr.id },
+						// @ts-ignore
+						process.env.JWT_SECRET
+					);
+
+					await verifyEmail(createdUsr.email, emailToken);
 					return res
 						.status(200)
 						.setHeader('Authorization', 'Bearer ' + token)
