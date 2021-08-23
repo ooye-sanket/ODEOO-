@@ -69,6 +69,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					);
 
 					await verifyEmail(createdUsr.email, emailToken);
+
 					return res
 						.status(200)
 						.setHeader('Authorization', 'Bearer ' + token)
