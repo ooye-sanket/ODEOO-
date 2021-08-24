@@ -4,7 +4,7 @@ import { Container, Card, Spinner, Row, Col, Button, InputGroup, Form } from 're
 import { At, Plus } from 'react-bootstrap-icons'
 import { FieldArray, ErrorMessage, Form as FormikForm, Formik } from 'formik';
 import * as Yup from 'yup';
-import { BsFormik } from '../../components'
+import { BsFormik, ProfileImageCropper } from '../../components'
 import useFetch from '../../hooks/useFetch'
 import { Genre, Event } from '../../@types'
 import moment from 'moment';
@@ -74,12 +74,21 @@ const Onboarding = () => {
          })
          .catch(console.error);
    };
+   const updateImage = (img: any) => {
+      let data = new FormData()
+
+      data.append('image', img)
+
+      Axios.put('/user/image', data).then(r => console.log(r.data)).catch(console.error)
+   }
    return (
       <Container>
          <div className="text-center my-3">
             <h4>Welcome aboard, a few steps before we go ahead.</h4>
          </div>
          <Card className='p-3'>
+            <ProfileImageCropper initialValue={user?.img?.url} afterChange={updateImage} />
+
             <Formik
                enableReinitialize
                initialValues={initialValues}
