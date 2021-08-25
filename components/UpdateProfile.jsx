@@ -13,7 +13,7 @@ import {
 import { At, Plus } from 'react-bootstrap-icons';
 import { FieldArray, ErrorMessage, Form as FormikForm, Formik } from 'formik';
 import * as Yup from 'yup';
-import { BsFormik } from './';
+import { BsFormik, ProfileImageCropper } from './';
 import useFetch from '../hooks/useFetch';
 import { Genre, Event } from '../@types';
 import moment from 'moment';
@@ -21,7 +21,8 @@ import { useContext } from 'react';
 import Context from '../Context';
 
 export const UpdateProfile = () => {
-	const router = useRouter();
+	const { setPswdModal } = useContext(Context);
+
 	const { data: user, loading } = useFetch('/user?all=true', {});
 
 	const initialValues = {
@@ -90,8 +91,18 @@ export const UpdateProfile = () => {
 			.catch(console.error);
 	};
 
+	const updateImage = (img) => {
+		let data = new FormData();
+
+		data.append('image', img);
+
+		Axios.put('/user/image', data)
+			.then((r) => console.log(r.data))
+			.catch(console.error);
+	};
+
 	return (
-		<Card className="my-2 p-3">
+		<Card className="my-2">
 			<Formik
 				enableReinitialize
 				initialValues={initialValues}
@@ -99,174 +110,219 @@ export const UpdateProfile = () => {
 				onSubmit={updateProfile}
 				validateOnBlur
 			>
-				{({ values, errors, touched, isSubmitting }) => (
-					<FormikForm className="d-block my-auto">
-						<div className="pt-1 d-flex justify-content-between align-items-center">
-							<h4 className="m-0">Edit Profile</h4>
-							<Button
-								className="d-block ms-auto"
-								variant="success"
-								type="submit"
-								// size='lg'
-								disabled={isSubmitting}
-							>
-								Done{' '}
-							</Button>
+				{({ values, errors, touched, isSubmitting }) =>
+					loading ? (
+						<div className="py-5 text-center">
+							<Spinner animation="border" role="status" variant="primary">
+								<span className="visually-hidden">Loading...</span>
+							</Spinner>
 						</div>
-						<hr />
-						<Row>
-							<Col xs="12" sm="6">
-								<BsFormik
-									className="mb-3"
-									name="firstName"
-									label="First Name"
-									isInvalid={errors.firstName && touched.firstName}
-								/>
-							</Col>
-							<Col xs="12" sm="6">
-								<BsFormik
-									className="mb-3"
-									name="lastName"
-									label="Last Name"
-									isInvalid={errors.lastName && touched.lastName}
-								/>
-							</Col>
-						</Row>
-						<Row>
-							<Col>
-								<BsFormik
-									className="mb-3"
-									type="email"
-									name="email"
-									label="Email Address"
-									isInvalid={errors.email && touched.email}
-								/>
-							</Col>
-						</Row>
-						<Row>
-							<Col xs="12" sm="7">
-								<InputGroup className="mb-3">
-									<InputGroup.Text id="basic-addon1">
-										<At size={24} />
-									</InputGroup.Text>
-									<BsFormik
-										className="flex-grow-1"
-										name="username"
-										label="Username"
-										style={{
-											borderTopLeftRadius: '0',
-											borderBottomLeftRadius: '0',
-										}}
-									/>
-								</InputGroup>
-							</Col>
-							<Col xs="12" sm="5">
-								<BsFormik
-									control="date"
-									className="mb-3"
-									name="dateOfBirth"
-									label="Date of Birth"
-								/>
-							</Col>
-						</Row>
-						<Row>
-							<Col xs="12" sm="6">
-								<BsFormik
-									className="mb-3"
-									maxLength={10}
-									name="phone"
-									label="Phone No."
-								/>
-							</Col>
-
-							<Col xs="12" sm="6">
-								<BsFormik
-									className="mb-3"
-									maxLength={12}
-									name="aadhar"
-									label="Aadhar Number"
-								/>
-							</Col>
-						</Row>
-						<Row>
-							<Col>
-								<BsFormik
-									className="mb-3"
-									control="textarea"
-									name="address"
-									label="Address"
-									isInvalid={errors.address && touched.address}
-								/>
-							</Col>
-						</Row>
-						<Form.Label>Youtube Links</Form.Label>
-						<FieldArray
-							name="youtubeLinks"
-							render={({ push, insert, remove }) => {
-								return values.youtubeLinks && values.youtubeLinks.length > 0 ? (
-									values.youtubeLinks.map((link, index) => (
-										<div className="mb-3" key={index}>
-											<InputGroup hasValidation>
-												<BsFormik
-													className="flex-grow-1"
-													name={`youtubeLinks.${index}`}
-													label={`Video #${index + 1}`}
-													style={{
-														borderTopRightRadius: '0',
-														borderBottomRightRadius: '0',
-													}}
-												/>
-												{values.youtubeLinks.length > 3 && (
-													<Button
-														variant="outline-primary"
-														style={{
-															borderTopRightRadius: '0',
-															borderBottomRightRadius: '0',
-														}}
-														onClick={() => remove(index)}
-													>
-														&#8722;
-													</Button>
-												)}
-												<Button
-													variant="outline-primary"
-													onClick={() => insert(index + 1, '')}
-												>
-													&#43;
-												</Button>
-											</InputGroup>
-										</div>
-									))
-								) : (
-									<Button onClick={() => push('')}>
-										<Plus /> Add a Link
+					) : (
+						<FormikForm className="d-block my-auto">
+							{/* <div className="pt-1 d-flex justify-content-between align-items-center"> */}
+							<Card.Header className="py-3 d-flex justify-content-between align-items-center">
+								<h4 className="m-0">Edit Profile</h4>
+								<div>
+									<Button
+										variant="warning"
+										className="me-2"
+										onClick={() => setPswdModal(true)}
+									>
+										Change Password
 									</Button>
-								);
-							}}
-						/>
-						<ErrorMessage
-							name="youtubeLinks"
-							component="small"
-							className="text-danger"
-						/>
+									<Button
+										variant="success"
+										type="submit"
+										// size='lg'
+										disabled={isSubmitting}
+									>
+										Done{' '}
+									</Button>
+								</div>
+							</Card.Header>
+							{/* </div> */}
+							{/* <hr /> */}
+							<Card.Body>
+								<Row>
+									<Col xs="12" sm="5">
+										<ProfileImageCropper
+											initialValue={user?.img?.url}
+											afterChange={updateImage}
+											// className="mb-3"
+										/>
+									</Col>
+									<Col xs="12" sm="7">
+										<BsFormik
+											className="mb-3"
+											name="firstName"
+											label="First Name"
+										/>
+										<BsFormik
+											className="mb-3"
+											name="lastName"
+											label="Last Name"
+										/>
+										<BsFormik
+											className="mb-3"
+											type="email"
+											name="email"
+											label="Email Address"
+										/>
+									</Col>
+								</Row>
+								<Row>
+									<Col xs="12" sm="7">
+										<InputGroup className="mb-3">
+											<InputGroup.Text id="basic-addon1">
+												<At size={24} />
+											</InputGroup.Text>
+											<BsFormik
+												className="flex-grow-1"
+												name="username"
+												label="Username"
+												style={{
+													borderTopLeftRadius: '0',
+													borderBottomLeftRadius: '0',
+												}}
+											/>
+										</InputGroup>
+									</Col>
+									<Col xs="12" sm="5">
+										<BsFormik
+											control="date"
+											className="mb-3"
+											name="dateOfBirth"
+											label="Date of Birth"
+										/>
+									</Col>
+								</Row>
+								<Row>
+									<Col xs="12" sm="6">
+										<BsFormik
+											className="mb-3"
+											maxLength={10}
+											name="phone"
+											label="Phone No."
+										/>
+									</Col>
 
-						<BsFormik
-							control="chips"
-							className="mb-3"
-							name="meta.genre"
-							label="Genre"
-							options={Object.values(Genre)}
-						/>
+									<Col xs="12" sm="6">
+										<BsFormik
+											className="mb-3"
+											maxLength={12}
+											name="aadhar"
+											label="Aadhar Number"
+										/>
+									</Col>
+								</Row>
+								<Row>
+									<Col>
+										<BsFormik
+											className="mb-3"
+											control="textarea"
+											name="address"
+											label="Address"
+											isInvalid={errors.address && touched.address}
+										/>
+									</Col>
+								</Row>
+								<Form.Label>Youtube Links</Form.Label>
+								<FieldArray
+									name="youtubeLinks"
+									render={({ push, insert, remove }) => {
+										return values.youtubeLinks &&
+											values.youtubeLinks.length > 0 ? (
+											values.youtubeLinks.map((link, index) => (
+												<div className="mb-3" key={index}>
+													<InputGroup hasValidation>
+														<BsFormik
+															className="flex-grow-1"
+															name={`youtubeLinks.${index}`}
+															label={`Video #${index + 1}`}
+															style={{
+																borderTopRightRadius: '0',
+																borderBottomRightRadius: '0',
+															}}
+														/>
+														{values.youtubeLinks.length > 3 && (
+															<Button
+																variant="outline-primary"
+																style={{
+																	borderTopRightRadius: '0',
+																	borderBottomRightRadius: '0',
+																}}
+																onClick={() => remove(index)}
+															>
+																&#8722;
+															</Button>
+														)}
+														<Button
+															variant="outline-primary"
+															onClick={() => insert(index + 1, '')}
+														>
+															&#43;
+														</Button>
+													</InputGroup>
+												</div>
+											))
+										) : (
+											<Button onClick={() => push('')}>
+												<Plus /> Add a Link
+											</Button>
+										);
+									}}
+								/>
+								<ErrorMessage
+									name="youtubeLinks"
+									component="small"
+									className="text-danger"
+								/>
 
-						<BsFormik
-							control="chips"
-							className="mb-3"
-							name="meta.events"
-							label="Events"
-							options={Object.values(Event)}
-						/>
-					</FormikForm>
-				)}
+								<div className="mb-3">
+									<BsFormik
+										control="checkbox-chips"
+										name="meta.genre"
+										label="Genre"
+										options={Object.values(Genre)}
+									/>
+									<ErrorMessage
+										name="meta.genre"
+										component="small"
+										className="text-danger"
+									/>
+								</div>
+								<div className="mb-3">
+									<BsFormik
+										control="checkbox-chips"
+										name="meta.events"
+										label="Events"
+										options={Object.values(Event)}
+									/>
+									<ErrorMessage
+										name="meta.events"
+										component="small"
+										className="text-danger"
+									/>
+								</div>
+								<Form.Text className="text-muted">
+									All the details provided by you except email, phone & address,
+									will be displayed publicly.
+								</Form.Text>
+							</Card.Body>
+							<Card.Footer>
+								<Button
+									className="d-block ms-auto"
+									variant="success"
+									type="submit"
+									// size='lg'
+									disabled={isSubmitting}
+								>
+									Done{' '}
+								</Button>
+							</Card.Footer>
+						</FormikForm>
+					)
+				}
 			</Formik>
 		</Card>
 	);

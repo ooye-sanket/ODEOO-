@@ -14,7 +14,8 @@ import Context from '../Context';
 import { BoxArrowInRight, BoxArrowRight, X } from 'react-bootstrap-icons';
 
 export const NavBar = () => {
-	const { loading, user, loginShow, setLoginShow } = useContext(Context);
+	const { loading, user, loginShow, setLoginShow, setPswdModal } =
+		useContext(Context);
 
 	return (
 		<>
@@ -70,7 +71,9 @@ export const NavBar = () => {
 												<NavDropdown.Item>My Account</NavDropdown.Item>
 											</Link>
 										)}
+
 										{/* <NavDropdown.Divider /> */}
+
 										<NavDropdown.Item
 											onClick={() => {
 												localStorage.removeItem('auth-token');

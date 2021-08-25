@@ -87,7 +87,7 @@ const Onboarding = () => {
             <h4>Welcome aboard, a few steps before we go ahead.</h4>
          </div>
          <Card className='p-3'>
-            <ProfileImageCropper initialValue={user?.img?.url} afterChange={updateImage} />
+            <ProfileImageCropper initialValue={user?.img?.url} afterChange={updateImage} className='my-2' />
 
             <Formik
                enableReinitialize

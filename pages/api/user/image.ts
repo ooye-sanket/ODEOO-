@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				} else if (err) {
 					return res.status(400).json({ msg: err });
 				}
-				console.log(files.image);
+				// console.log(files.image);
 				try {
 					const { img } = await User.findById(usr._id, 'img');
 					if (img.url) await deleteFile(img._key);

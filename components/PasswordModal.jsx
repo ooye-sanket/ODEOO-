@@ -93,7 +93,7 @@ export const PasswordModal = () => {
 						</Modal.Body>
 						<Modal.Footer>
 							<Button
-								variant="primary"
+								variant="success"
 								className="d-block ms-auto"
 								type="submit"
 								// size='lg'

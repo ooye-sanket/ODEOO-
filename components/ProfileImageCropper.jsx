@@ -2,7 +2,11 @@ import { useEffect, useState, useRef } from 'react';
 import { ImageCropper, HiddenCropper } from 'react-bootstrap-image-cropper';
 import { Button } from 'react-bootstrap';
 import { Camera } from 'react-bootstrap-icons';
-export const ProfileImageCropper = ({ initialValue, afterChange }) => {
+export const ProfileImageCropper = ({
+	initialValue,
+	afterChange,
+	className,
+}) => {
 	// if you don't care the onChange event, you can use a ref to retrieve the cropped file
 	const triggerRef = useRef();
 	const [image, setImage] = useState(initialValue);
@@ -17,7 +21,7 @@ export const ProfileImageCropper = ({ initialValue, afterChange }) => {
 	};
 
 	return (
-		<div>
+		<div className={className}>
 			<Button
 				variant="light"
 				className="image-overlay-btn d-block mx-auto p-0"
