@@ -82,13 +82,14 @@ export const UpdateProfile = () => {
 			),
 	});
 
-	const updateProfile = (values) => {
+	const updateProfile = (values, { setSubmitting }) => {
 		console.log(values);
 		Axios.put('/user/profile', { ...values })
 			.then((r) => {
 				console.log('Updated');
 			})
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setSubmitting(false));
 	};
 
 	const updateImage = (img) => {

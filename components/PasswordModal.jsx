@@ -44,14 +44,15 @@ export const PasswordModal = () => {
 			.notOneOf([Yup.ref('password'), null], 'Think of a new password'),
 	});
 
-	const changePassword = (values) => {
+	const changePassword = (values, { setSubmitting }) => {
 		console.log(values);
 		Axios.put('/user/password?action=change', { ...values })
 			.then((r) => {
 				console.log('Updated');
 				setPswdModal(false);
 			})
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setSubmitting(false));
 	};
 
 	return (

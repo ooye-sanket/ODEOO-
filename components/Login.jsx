@@ -23,7 +23,7 @@ export const Login = () => {
 			.min(8, 'Password is too short - should be 8 chars minimum.'),
 	});
 
-	const login = (values) => {
+	const login = (values, { setSubmitting }) => {
 		const { email, password } = values;
 		console.log('Login');
 		Axios.post('/login', { email, password })
@@ -34,7 +34,8 @@ export const Login = () => {
 				);
 				Router.reload();
 			})
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setSubmitting(false));
 	};
 
 	return (

@@ -66,13 +66,15 @@ const Onboarding = () => {
       })
    });
 
-   const updateProfile = (values: any) => {
+   const updateProfile = (values: any, { setSubmitting }: any) => {
       console.log(values)
       Axios.post('/user/profile', { ...values })
          .then((r) => {
             router.push('/profile');
          })
-         .catch(console.error);
+         .catch(console.error)
+         .finally(() => setSubmitting(false));
+
    };
    const updateImage = (img: any) => {
       let data = new FormData()

@@ -1,9 +1,9 @@
 import { AppProps } from 'next/app';
-import "@fontsource/raleway/500.css"
-import '@fontsource/raleway/500-italic.css'
-import "@fontsource/raleway/600.css"
-import "@fontsource/raleway/700.css"
-import "@fontsource/raleway/900.css"
+import "@fontsource/rubik/500.css"
+import '@fontsource/rubik/500-italic.css'
+import "@fontsource/rubik/600.css"
+import "@fontsource/rubik/700.css"
+import "@fontsource/rubik/900.css"
 import '../styles/global.scss';
 import Standard from '../layouts/Standard'
 import Minimal from '../layouts/Minimal'

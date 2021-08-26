@@ -11,7 +11,7 @@ import moment from 'moment';
 
 const Artist = () => {
    const router = useRouter()
-   const { data: artist, loading } = useFetch(`/artists/${router.query.username}`, {})
+   const { data: artist, loading } = useFetch(`/artists/${router.query.username}`, { })
 
    const initialValues = {
       firstName: artist?.firstName,
@@ -69,13 +69,14 @@ const Artist = () => {
          .of(Yup.string().matches(/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?$/, "Invalid youtube link"))
    });
 
-   const updateProfile = (values: any) => {
+   const updateProfile = (values: any, { setSubmitting }: any) => {
       console.log(values)
       Axios.put('/user/profile', { ...values, id: artist._id })
          .then((r) => {
             router.push('/admin');
          })
-         .catch(console.error);
+         .catch(console.error)
+         .finally(() => setSubmitting(false));
    };
 
    // firstName,
