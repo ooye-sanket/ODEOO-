@@ -21,30 +21,52 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			form.keepExtensions = true;
 			// @ts-ignore
 			form.parse(req, async (err, fields, files) => {
-				if (!files) {
+				if (usr?.role === 'ADMIN' && !fields.id) {
+					return res.status(400).json({ msg: 'Provide all fields' });
+				} else if (!files) {
 					return res.status(400).json({ msg: 'Provide a relevant image file' });
 				} else if (err) {
 					return res.status(400).json({ msg: err });
 				}
 				// console.log(files.image);
-				try {
-					const { img } = await User.findById(usr._id, 'img');
-					if (img.url) await deleteFile(img._key);
-					const uploaded = await uploadFile(
-						files.image,
-						`image_${usr.username}`
-					);
-					const updated = await User.findByIdAndUpdate(usr._id, {
-						img: { url: uploaded.Location, _key: uploaded.Key },
-					}).select('username img');
-					return res.json({
-						msg: 'Image uploaded successfully',
-						imgUrl: uploaded.Location,
-						updated,
-					});
-				} catch (error) {
-					console.error(error);
-					return res.status(400).json({ msg: 'Something went wrong' });
+				if (usr?.role === 'ADMIN' && fields.id) {
+					console.log('Admin Operation');
+					try {
+						const { img } = await User.findById(fields.id, 'img');
+						if (img.url) await deleteFile(img._key);
+						const uploaded = await uploadFile(
+							files.image,
+							`image_${fields.id}`
+						);
+						const userData = await User.findByIdAndUpdate(fields.id, {
+							img: { url: uploaded.Location, _key: uploaded.Key },
+						}).select('_id username');
+						return res.json({
+							msg: 'Image uploaded successfully',
+							imgUrl: uploaded.Location,
+							userData,
+						});
+					} catch (err) {
+						console.error('Profile Update Error:', err);
+						return res.status(500).json({ msg: 'Something went wrong' });
+					}
+				} else {
+					try {
+						const { img } = await User.findById(usr._id, 'img');
+						if (img.url) await deleteFile(img._key);
+						const uploaded = await uploadFile(files.image, `image_${usr._id}`);
+						const userData = await User.findByIdAndUpdate(usr._id, {
+							img: { url: uploaded.Location, _key: uploaded.Key },
+						}).select('_id username');
+						return res.json({
+							msg: 'Image uploaded successfully',
+							imgUrl: uploaded.Location,
+							userData,
+						});
+					} catch (error) {
+						console.error(error);
+						return res.status(400).json({ msg: 'Something went wrong' });
+					}
 				}
 			});
 			break;

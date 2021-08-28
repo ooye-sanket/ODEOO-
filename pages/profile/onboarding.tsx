@@ -17,6 +17,7 @@ const Onboarding = () => {
    const initialValues = {
       username: user?.username,
       phone: user?.phone,
+      description: user?.description || undefined,
       address: user?.address || undefined,
       dateOfBirth: moment(user?.dateOfBirth).format('YYYY-MM-DD'),
       aadhar: user?.aadhar,
@@ -40,6 +41,9 @@ const Onboarding = () => {
                }
             }
          ),
+      description: Yup.string()
+         .required('Profile Description is required')
+         .min(30, 'Description should be at least 30 characters long'),
       phone: Yup.string()
          .required('Phone no. is required.')
          .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -133,6 +137,16 @@ const Onboarding = () => {
                                  label="Date of Birth"
                               />
 
+                           </Col>
+                        </Row>
+                        <Row>
+                           <Col >
+                              <BsFormik
+                                 className='mb-3'
+                                 control='textarea'
+                                 name="description"
+                                 label="Profile Description"
+                              />
                            </Col>
                         </Row>
                         <Row>

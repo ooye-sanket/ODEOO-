@@ -48,6 +48,9 @@ export const UpdateProfile = () => {
 				/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
 				'Invalid Phone Number'
 			),
+		description: Yup.string()
+			.required('Profile Description is required')
+			.min(30, 'Description should be at least 30 characters long'),
 		dateOfBirth: Yup.string()
 			.required('Date of Birth is required.')
 			.test(
@@ -198,6 +201,16 @@ export const UpdateProfile = () => {
 											className="mb-3"
 											name="dateOfBirth"
 											label="Date of Birth"
+										/>
+									</Col>
+								</Row>
+								<Row>
+									<Col>
+										<BsFormik
+											className="mb-3"
+											control="textarea"
+											name="description"
+											label="Profile Description"
 										/>
 									</Col>
 								</Row>

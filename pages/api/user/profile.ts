@@ -20,11 +20,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		username,
 		email,
 		phone,
+		description,
 		password,
 		address,
 		dateOfBirth,
 		aadhar,
-		// imgUrl,
 		youtubeLinks,
 		verification,
 		meta,
@@ -35,7 +35,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	switch (req.method) {
 		case 'POST':
-			if (!phone || !address || !dateOfBirth || !youtubeLinks || !meta)
+			if (
+				!phone ||
+				!description ||
+				!address ||
+				!dateOfBirth ||
+				!youtubeLinks ||
+				!meta
+			)
 				return res
 					.status(400)
 					.json({ msg: 'Please enter all the required fields' });
@@ -46,13 +53,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			try {
 				const updatedUsr = await User.findByIdAndUpdate(usr.id, {
 					phone,
+					description,
 					address,
 					dateOfBirth,
 					aadhar,
 					youtubeLinks,
 					meta,
 				}).select(
-					'phone address dateOfBirth aadhar imgUrl youtubeLinks meta.genre meta.events'
+					'phone description address dateOfBirth aadhar imgUrl youtubeLinks meta.genre meta.events'
 				);
 				return res.status(200).json({
 					msg: 'Profile created successfully',
@@ -110,10 +118,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					username,
 					email,
 					phone,
+					description,
 					address,
 					dateOfBirth,
 					aadhar,
-					// imgUrl,
 					youtubeLinks,
 					meta,
 				}).select('-password -verification -__v');

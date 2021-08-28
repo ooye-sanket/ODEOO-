@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { Login, AdminNav } from '../components';
 import Context from '../Context';
 
@@ -24,7 +24,11 @@ const Admin = ({ children }) => {
 			})
 		)
 	) : loading ? (
-		<>Loading...</>
+		<div className="py-5 text-center">
+			<Spinner animation="border" role="status" variant="primary">
+				<span className="visually-hidden">Loading...</span>
+			</Spinner>
+		</div>
 	) : (
 		router.replace({
 			pathname: '/',
