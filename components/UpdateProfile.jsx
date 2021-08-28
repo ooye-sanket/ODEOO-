@@ -41,7 +41,7 @@ export const UpdateProfile = () => {
 		youtubeLinks: user?.youtubeLinks || ['', '', ''],
 	};
 	const validationSchema = Yup.object().shape({
-		email: Yup.string().email('Invalid Email').required('Email is required.'),
+		email: Yup.string().required('Email is required.').email('Invalid Email'),
 		phone: Yup.string()
 			.required('Phone no. is required.')
 			.matches(
@@ -49,15 +49,15 @@ export const UpdateProfile = () => {
 				'Invalid Phone Number'
 			),
 		dateOfBirth: Yup.string()
+			.required('Date of Birth is required.')
 			.test(
 				'dateOfBirth',
 				'Age should be greater than 16',
 				(value) => moment().diff(moment(value), 'years') >= 16
-			)
-			.required('Date of Birth is required.'),
+			),
 		username: Yup.string()
-			.lowercase('Username cannot contain capital letters')
 			.required('Username is required.')
+			.lowercase('Username cannot contain capital letters')
 			.test('username', 'Username taken', async (value) => {
 				try {
 					const r = await Axios.get(`/users/${value}`);
@@ -67,11 +67,11 @@ export const UpdateProfile = () => {
 				}
 			}),
 		aadhar: Yup.number()
+			.required('Aadhar no. is required')
 			.typeError("Doesn't look like an Aadhar no.")
 			.positive("Aadhar no. can't start with a minus")
 			.integer("Aadhar no. can't include a decimal point")
-			.min(12, 'Aadhar no. cannot be shorter than 12 digits')
-			.required('Aadhar no. is required'),
+			.min(12, 'Aadhar no. cannot be shorter than 12 digits'),
 		youtubeLinks: Yup.array()
 			.min(3, 'Provide atleast 3 youtube links')
 			.of(
@@ -80,6 +80,10 @@ export const UpdateProfile = () => {
 					'Invalid youtube link'
 				)
 			),
+		meta: Yup.object().shape({
+			genre: Yup.array().min(2, 'Select atleast 2 genre').of(Yup.string()),
+			events: Yup.array().min(2, 'Select atleast 2 events').of(Yup.string()),
+		}),
 	});
 
 	const updateProfile = (values, { setSubmitting }) => {

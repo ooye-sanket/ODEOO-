@@ -22,16 +22,18 @@ export const ProfileImageCropper = ({
 
 	return (
 		<div className={className}>
-			<Button
-				variant="light"
-				className="image-overlay-btn d-block mx-auto p-0"
+			<div
+				className="image-overlay d-block mx-auto"
 				onClick={() => triggerRef.current.trigger()}
 			>
-				<img src={image} alt="" />
-				<div className="overlay">
-					<Camera size={40} />
+				<div className="content">
+					{image ? <img src={image} alt="" /> : <Camera size={40} />}
 				</div>
-			</Button>
+
+				<Button variant="success" className="px-2 pb-2 pt-1">
+					<Camera size={18} />
+				</Button>
+			</div>
 			<HiddenCropper
 				mimeType="image/jpeg"
 				triggerRef={triggerRef}

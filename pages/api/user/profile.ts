@@ -35,14 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	switch (req.method) {
 		case 'POST':
-			if (
-				!phone ||
-				!address ||
-				!dateOfBirth ||
-				!aadhar ||
-				!youtubeLinks ||
-				!meta
-			)
+			if (!phone || !address || !dateOfBirth || !youtubeLinks || !meta)
 				return res
 					.status(400)
 					.json({ msg: 'Please enter all the required fields' });

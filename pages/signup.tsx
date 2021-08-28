@@ -18,16 +18,15 @@ const Register = () => {
       phone: "",
       password: "",
       passwordConfirm: ''
-
    };
    const validationSchema = Yup.object().shape({
       email: Yup.string().email('Invalid Email').required('Email is required.'),
       password: Yup.string()
-         .required('No password provided.'),
-      // .matches(
-      //    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      //    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-      // ),
+         .required('No password provided.')
+         .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+         ),
       passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], "Passwords must match"),
       phone: Yup.string()
          .required('Phone no. is required.')
@@ -117,6 +116,7 @@ const Register = () => {
                                  <BsFormik
                                     className='mb-3'
                                     name="phone"
+                                    maxLength={10}
                                     label="Phone No."
                                     isInvalid={errors.phone && touched.phone}
                                  />

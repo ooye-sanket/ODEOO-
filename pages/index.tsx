@@ -22,7 +22,7 @@ const Home = () => {
 						<Col xs={{ span: 12, order: 'last' }} lg='6'>
 							<h1 className='display-5'>The Ultimate Platform For All Local Artists</h1>
 							<p className='text-muted'>We are team of Talented artists making your event memorable.</p>
-							<Button className='mb-1 me-1' >Post a Requirement</Button>
+							<Button className='mb-1 me-2' >Post Inquiry</Button>
 							<Button className='mb-1 me-1' variant='outline-dark'>Learn More</Button>
 						</Col>
 						<Col xs={{ span: 12, order: 'first' }} lg='6'>
@@ -86,9 +86,9 @@ const Home = () => {
 							</Spinner>
 						) : artists.length == 0 ?
 							(
-								<h3>
+								<span className='text-muted text-center'>
 									No Artists Found
-								</h3>
+								</span>
 
 							)
 							: artists?.map((itr: any, key: any) => (
