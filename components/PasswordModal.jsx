@@ -15,6 +15,7 @@ import * as Yup from 'yup';
 import { BsFormik } from './';
 import { useContext } from 'react';
 import Context from '../Context';
+import cogoToast from 'cogo-toast';
 
 export const PasswordModal = () => {
 	const { user, pswdModal, setPswdModal } = useContext(Context);
@@ -48,10 +49,12 @@ export const PasswordModal = () => {
 		console.log(values);
 		Axios.put('/user/password?action=change', { ...values })
 			.then((r) => {
-				console.log('Updated');
 				setPswdModal(false);
+				cogoToast.success(r.data.msg, { position: 'bottom-left' });
 			})
-			.catch(console.error)
+			.catch(({ response: r }) => {
+				cogoToast.error(r.data.msg, { position: 'bottom-left' });
+			})
 			.finally(() => setSubmitting(false));
 	};
 

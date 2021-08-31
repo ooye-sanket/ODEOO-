@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import Context from '../Context';
 import { BsFormik } from '../components';
 import Image from 'next/image';
+import cogoToast from 'cogo-toast';
 
 export const Login = () => {
 	const { loginShow, setLoginShow } = useContext(Context);
@@ -32,9 +33,14 @@ export const Login = () => {
 					'auth-token',
 					r.headers.authorization.split(' ')[1]
 				);
-				Router.reload();
+				cogoToast
+					.success(r.data.msg, { position: 'bottom-left' })
+					.then(() => Router.reload());
 			})
-			.catch(console.error)
+			.catch((e) => {
+				cogoToast.error(e.response.data.msg, { position: 'bottom-left' });
+				console.log(e.response);
+			})
 			.finally(() => setSubmitting(false));
 	};
 

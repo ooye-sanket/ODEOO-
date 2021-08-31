@@ -19,6 +19,7 @@ import { Genre, Event } from '../@types';
 import moment from 'moment';
 import { useContext } from 'react';
 import Context from '../Context';
+import cogoToast from 'cogo-toast';
 
 export const UpdateProfile = () => {
 	const { setPswdModal } = useContext(Context);
@@ -31,6 +32,7 @@ export const UpdateProfile = () => {
 		username: user?.username,
 		email: user?.email,
 		phone: user?.phone,
+		description: user?.description || undefined,
 		dateOfBirth: moment(user?.dateOfBirth).format('YYYY-MM-DD'),
 		aadhar: user?.aadhar,
 		address: user?.address || undefined,
@@ -45,7 +47,7 @@ export const UpdateProfile = () => {
 		phone: Yup.string()
 			.required('Phone no. is required.')
 			.matches(
-				/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+				/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
 				'Invalid Phone Number'
 			),
 		description: Yup.string()
@@ -90,23 +92,32 @@ export const UpdateProfile = () => {
 	});
 
 	const updateProfile = (values, { setSubmitting }) => {
+		cogoToast.loading('Saving changes...', { position: 'bottom-left' });
 		console.log(values);
 		Axios.put('/user/profile', { ...values })
 			.then((r) => {
-				console.log('Updated');
+				cogoToast.success(r.data.msg, { position: 'bottom-left' });
 			})
-			.catch(console.error)
+			.catch(({ response: r }) => {
+				cogoToast.warn(r.data.msg, { position: 'bottom-left' });
+			})
 			.finally(() => setSubmitting(false));
 	};
 
 	const updateImage = (img) => {
+		cogoToast.loading('Uploading image...', { position: 'bottom-left' });
 		let data = new FormData();
 
 		data.append('image', img);
 
 		Axios.put('/user/image', data)
-			.then((r) => console.log(r.data))
-			.catch(console.error);
+			.then((r) => {
+				cogoToast.success(r.data.msg, { position: 'bottom-left' });
+				console.log(r.data);
+			})
+			.catch(({ response: r }) => {
+				cogoToast.warn(r.data.msg, { position: 'bottom-left' });
+			});
 	};
 
 	return (

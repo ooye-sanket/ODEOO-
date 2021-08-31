@@ -46,7 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 								password: hashedPwd,
 							});
 							return res.status(200).json({
-								msg: 'Password changed successfully',
+								msg: 'Password changed',
 							});
 						} else {
 							return res

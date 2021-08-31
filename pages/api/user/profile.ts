@@ -63,12 +63,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					'phone description address dateOfBirth aadhar imgUrl youtubeLinks meta.genre meta.events'
 				);
 				return res.status(200).json({
-					msg: 'Profile created successfully',
+					msg: 'Good to go! Profile updated',
 					data: updatedUsr,
 				});
 			} catch (err: any) {
 				console.error('Profile Update Error:', err);
-				return res.status(500).json({ msg: 'Something went wrong' });
+				return res
+					.status(500)
+					.json({ msg: "Oops! Something's wrong, try again" });
 			}
 			// compare(password, usr.password, async (err: any, obj: any) => {
 			// 	if (!err && obj) {
@@ -126,12 +128,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					meta,
 				}).select('-password -verification -__v');
 				return res.status(200).json({
-					msg: 'Profile updated successfully',
+					msg: 'Profile updated',
 					data: updatedUsr,
 				});
 			} catch (err: any) {
 				console.error('Profile Update Error:', err);
-				return res.status(500).json({ msg: 'Something went wrong' });
+				return res
+					.status(500)
+					.json({ msg: "Oops! Something's wrong, try again" });
 			}
 			// compare(password, usr.password, async (err: any, obj: any) => {
 			// 	if (!err && obj) {

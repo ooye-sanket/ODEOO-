@@ -42,13 +42,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							img: { url: uploaded.Location, _key: uploaded.Key },
 						}).select('_id username');
 						return res.json({
-							msg: 'Image uploaded successfully',
+							msg: 'Profile picture updated',
 							imgUrl: uploaded.Location,
 							userData,
 						});
 					} catch (err) {
 						console.error('Profile Update Error:', err);
-						return res.status(500).json({ msg: 'Something went wrong' });
+						return res
+							.status(500)
+							.json({ msg: "Oops! Something's wrong, try again" });
 					}
 				} else {
 					try {
@@ -59,13 +61,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 							img: { url: uploaded.Location, _key: uploaded.Key },
 						}).select('_id username');
 						return res.json({
-							msg: 'Image uploaded successfully',
+							msg: 'Profile picture updated',
 							imgUrl: uploaded.Location,
 							userData,
 						});
 					} catch (error) {
 						console.error(error);
-						return res.status(400).json({ msg: 'Something went wrong' });
+						return res
+							.status(400)
+							.json({ msg: "Oops! Something's wrong, try again" });
 					}
 				}
 			});

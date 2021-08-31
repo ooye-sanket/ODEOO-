@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			if (email) {
 				try {
 					const usr = await User.findOne({ email });
-					compare(password, usr.password, (err: any, obj: any) => {
+					compare(password, usr?.password, (err: any, obj: any) => {
 						if (!err && obj) {
 							const { firstName, lastName, username } = usr;
 							const token = jwt.sign(
@@ -41,7 +41,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 								.status(200)
 								.setHeader('Authorization', 'Bearer ' + token)
 								.json({
-									msg: 'User logged in successfully',
+									msg: `Welcome back ${firstName}`,
 									data: {
 										firstName,
 										lastName,
@@ -51,10 +51,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 									},
 								});
 						} else {
-							return res.status(401).json({ msg: "Credentials don't match" });
+							return res.status(401).json({ msg: 'Email or password invalid' });
 						}
 					});
 				} catch (err) {
+					console.log(err);
 					return res.status(400).json({ msg: 'Something went wrong' });
 				}
 			}

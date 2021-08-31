@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import Context from '../Context';
 import useFetch from '../hooks/useFetch';
+import cogoToast from 'cogo-toast';
 
 
 const Home = () => {
@@ -23,7 +24,9 @@ const Home = () => {
 							<h1 className='display-5'>The Ultimate Platform For All Local Artists</h1>
 							<p className='text-muted'>We are team of Talented artists making your event memorable.</p>
 							<Button className='mb-1 me-2' >Post Inquiry</Button>
-							<Button className='mb-1 me-1' variant='outline-dark'>Learn More</Button>
+							<Button className='mb-1 me-1' variant='outline-dark' onClick={() => {
+								cogoToast.success('Hello', { position: 'bottom-center' })
+							}}>Learn More</Button>
 						</Col>
 						<Col xs={{ span: 12, order: 'first' }} lg='6'>
 							<div className="text-center">

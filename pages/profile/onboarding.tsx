@@ -10,6 +10,7 @@ import { Genre, Event } from '../../@types'
 import moment from 'moment';
 import { useContext, useState } from 'react';
 import Context from '../../Context';
+import cogoToast from 'cogo-toast';
 
 const Onboarding = () => {
    const router = useRouter()
@@ -46,8 +47,8 @@ const Onboarding = () => {
          .min(30, 'Description should be at least 30 characters long'),
       phone: Yup.string()
          .required('Phone no. is required.')
-         .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-            , 'Invalid Phone Number'),
+         .matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
+            'Invalid Phone Number'),
       address: Yup.string().required('Address is required.')
          .typeError("Doesn't look like an address"),
       dateOfBirth: Yup.string().test(
@@ -73,19 +74,32 @@ const Onboarding = () => {
    const updateProfile = (values: any, { setSubmitting }: any) => {
       console.log(values)
       Axios.post('/user/profile', { ...values })
-         .then((r) => {
-            router.push('/profile');
+         .then(r => {
+            cogoToast
+               .success(r.data.msg, { position: 'bottom-left' }).then(() => router.push('/profile'))
+
+         }).catch(({ response: r }) => {
+            cogoToast
+               .warn(r.data.msg, { position: 'bottom-left' })
          })
-         .catch(console.error)
          .finally(() => setSubmitting(false));
 
    };
    const updateImage = (img: any) => {
+      cogoToast
+         .loading('Uploading image...', { position: 'bottom-left' })
       let data = new FormData()
 
       data.append('image', img)
 
-      Axios.put('/user/image', data).then(r => console.log(r.data)).catch(console.error)
+      Axios.put('/user/image', data).then(r => {
+         cogoToast
+            .success(r.data.msg, { position: 'bottom-left' })
+         console.log(r.data)
+      }).catch(({ response: r }) => {
+         cogoToast
+            .warn(r.data.msg, { position: 'bottom-left' })
+      })
    }
    return (
       <Container>
@@ -153,7 +167,7 @@ const Onboarding = () => {
                            <Col xs='12' sm='6'>
                               <BsFormik
                                  className='mb-3'
-                                 maxLength={10}
+                                 maxLength={13}
                                  name="phone"
                                  label="Phone No."
                               />

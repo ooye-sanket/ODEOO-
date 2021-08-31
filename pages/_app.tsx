@@ -10,6 +10,7 @@ import Minimal from '../layouts/Minimal'
 import Admin from '../layouts/Admin'
 import { Provider } from '../Context'
 import Axios from 'axios';
+// import { Notification } from '../components';
 
 Axios.defaults.baseURL = '/api'
 Axios.interceptors.request.use(
@@ -40,6 +41,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider>
       <Layout>
+        {/* <Notification /> */}
         <Component {...pageProps} />
       </Layout>
     </Provider>

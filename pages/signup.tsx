@@ -7,6 +7,7 @@ import { At } from 'react-bootstrap-icons'
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
 import * as Yup from 'yup';
 import { BsFormik } from '../components'
+import cogoToast from 'cogo-toast';
 
 const Register = () => {
 
@@ -30,12 +31,12 @@ const Register = () => {
       passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], "Passwords must match"),
       phone: Yup.string()
          .required('Phone no. is required.')
-         .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+         .matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
             'Invalid Phone Number'),
    });
 
    const signup = (values: any, { setSubmitting }: any) => {
-      const { email, password } = values;
+      // const { email, password } = values;
       Axios.post('/signup', values)
          .then((r) => {
             localStorage.setItem(
@@ -43,9 +44,12 @@ const Register = () => {
                r.headers.authorization.split(' ')[1]
             );
             window.location.replace("/");
-
+            cogoToast
+               .success(r.data.msg, { position: 'bottom-left' })
+         }).catch(({ response: r }) => {
+            cogoToast
+               .warn(r.data.msg, { position: 'bottom-left' })
          })
-         .catch(console.error)
          .finally(() => setSubmitting(false));
    };
 
