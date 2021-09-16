@@ -20,7 +20,7 @@ export const verifyEmail = async (email, token) => {
 				process.env.NODE_ENV == 'production'
 					? process.env.PROD_BASE_URL
 					: process.env.DEV_BASE_URL
-			}/api/verify/${token}'> here</a> to verify your email.`,
+			}/verify/${token}'> here</a> to verify your email.`,
 		};
 
 		await Transporter.sendMail(mailOptions, (err, obj) => {

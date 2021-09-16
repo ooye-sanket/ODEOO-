@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import connectDB from '../../../middleware/connectDB';
+import db from '../../../middleware/db';
 import cors from '../../../middleware/cors';
 import { Inquiry } from '../../../models';
 import runMiddleware from '../../../utils/runMiddleware';
@@ -106,4 +106,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default connectDB(handler);
+export default db(handler);

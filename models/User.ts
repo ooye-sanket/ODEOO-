@@ -52,6 +52,7 @@ const UserSchema = new Schema(
 			genre: { type: [String], enum: Object.values(Genre) },
 			events: { type: [String], enum: Object.values(Event) },
 		},
+		pro: { type: Boolean, required: true, default: false, auto: true },
 		role: {
 			type: String,
 			enum: Object.values(Role),

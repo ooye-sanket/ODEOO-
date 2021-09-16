@@ -23,7 +23,7 @@ export const Provider = ({ children }) => {
 					);
 					setData({ ...data, user: r.data.data });
 				})
-				.catch(console.error)
+				.catch(()=>{console.warn('No User')})
 				.finally(() => setData((data) => ({ ...data, loading: false })));
 		};
 		getUser();

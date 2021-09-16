@@ -96,7 +96,7 @@ const Home = () => {
 							)
 							: artists?.map((itr: any, key: any) => (
 								<Col key={key} xs={12} sm={6} lg={4} xl='auto'>
-									<Artist img={itr?.img?.url} name={`${itr.firstName} ${itr.lastName}`} categories={itr.meta.categories} link={`/artists/${itr.username}`} />
+									<Artist img={itr?.img?.url} name={`${itr.firstName} ${itr.lastName}`} categories={itr.meta.genre} pro={itr.pro} link={`/artists/${itr.username}`} />
 								</Col>
 							))
 					}

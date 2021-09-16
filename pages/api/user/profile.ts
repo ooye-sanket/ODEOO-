@@ -1,7 +1,7 @@
 import { compare } from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import runMiddleware from '../../../utils/runMiddleware';
-import connectDB from '../../../middleware/connectDB';
+import db from '../../../middleware/db';
 import cors from '../../../middleware/cors';
 import { sign } from 'jsonwebtoken';
 import { User, IUser } from '../../../models';
@@ -150,4 +150,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default connectDB(withUserStrict(handler));
+export default db(withUserStrict(handler));

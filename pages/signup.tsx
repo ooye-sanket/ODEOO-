@@ -33,6 +33,19 @@ const Register = () => {
          .required('Phone no. is required.')
          .matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
             'Invalid Phone Number'),
+      username: Yup.string().required('Username is required.')
+         .lowercase('Username cannot contain capital letters').test(
+            "username",
+            "Username taken",
+            async (value: any) => {
+               try {
+                  const r = await Axios.get(`/artists/${value}`)
+                  return false
+               } catch (err) {
+                  return true
+               }
+            }
+         ),
    });
 
    const signup = (values: any, { setSubmitting }: any) => {

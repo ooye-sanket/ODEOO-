@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import connectDB from '../../../middleware/connectDB';
+import db from '../../../middleware/db';
 import cors from '../../../middleware/cors';
 import withUser from '../../../middleware/withUser';
 import { User } from '../../../models';
@@ -31,10 +31,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			const select =
 				usr?.role === 'ADMIN'
 					? '-password -__v'
-					: '-password -dateOfBirth -address -phone -__v';
+					: '-password -dateOfBirth -address -phone -email -__v';
 			try {
 				const artist = await User.findOne(query, select);
-				console.log(artist);
+				// console.log(artist);
 				if (artist) {
 					return res
 						.status(200)
@@ -51,4 +51,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default connectDB(withUser(handler));
+export default db(withUser(handler));
