@@ -8,7 +8,7 @@ const Artist = ({ username }: any) => {
 
    return (
       <Container className='py-4'>
-         {loading || !artist.img ?
+         {loading || !artist ?
             <div className="py-5 text-center">
                <Spinner animation="border" role="status" variant="primary">
                   <span className="visually-hidden">Loading...</span>
@@ -16,30 +16,30 @@ const Artist = ({ username }: any) => {
             </div> :
             <Row>
                <Col xs="12" lg="4" className='text-center'>
-                  <Image src={artist?.img?.url} className='mb-3' roundedCircle style={{ maxWidth: '360px' }} alt={`${artist?.firstName}'s photo'`} />
-                  <div className="mb-4 text-start">
-                     <h4>Genre</h4>
-                     {artist.meta?.genre?.map((i: any, key: any) => (
-                        <Badge key={key} bg="primary" className="mb-1 me-1 t-size-normal">
-                           {i}
-                        </Badge>
-                     ))}
-                  </div>
-                  <div className="mb-4  text-start">
-                     <h4>Events</h4>
-                     {artist.meta?.events?.map((i: any, key: any) => (
-                        <Badge key={key} bg="primary" className="mb-1 me-1 t-size-normal">
-                           {i}
-                        </Badge>
-                     ))}
-                  </div>
+                  <Image src={artist?.img?.url} roundedCircle />
                </Col>
                <Col xs="12" lg="8" className='py-2'>
                   <h1>{artist.firstName} {artist.lastName}</h1>
                   <p className='text-muted'>{artist.description}</p>
                   <div className="mb-4">
+                     <h4>Genre</h4>
+                     {artist.meta?.genre?.map((i: any, key: any) => (
+                        <Badge key={key} bg="primary" className="me-1 t-size-normal">
+                           {i}
+                        </Badge>
+                     ))}
+                  </div>
+                  <div className="mb-4">
+                     <h4>Events</h4>
+                     {artist.meta?.events?.map((i: any, key: any) => (
+                        <Badge key={key} bg="primary" className="me-1 t-size-normal">
+                           {i}
+                        </Badge>
+                     ))}
+                  </div>
+                  <div className="mb-4">
                      <h4>Videos</h4>
-                     {artist?.youtubeLinks?.map((i: any, key: any) => {
+                     {artist.youtubeLinks.map((i: any, key: any) => {
                         const id = getVideoId(i)
                         return (
                            <div key={key} className='d-inline-block m-1 rounded'>
@@ -54,16 +54,14 @@ const Artist = ({ username }: any) => {
 
                </Col>
             </Row>}
+
       </Container>
    )
 }
 
-export const getServerSideProps = async ({ query }: any) => {
+Artist.getInitialProps = async ({ query }: any) => {
    const { username } = query
-   console.log(username)
-   return {
-      props: { username }
-   }
+   return { username }
 }
 
 Artist.layout = 'STANDARD'

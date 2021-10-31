@@ -13,7 +13,7 @@ const Home = () => {
 	const { query } = useRouter()
 	const { user, setLoginShow }: any = useContext(Context)
 	const { data: artists, loading } = useFetch('/artists', [])
-	useEffect(() => { if (query.showLogin) setLoginShow(true) }, [query.showLogin])
+	useEffect(() => { if (query.showLogin) setLoginShow(true) }, [])
 
 	return (
 		<>
