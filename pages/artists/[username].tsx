@@ -16,7 +16,7 @@ const Artist = ({ username }: any) => {
             </div> :
             <Row>
                <Col xs="12" lg="4" className='text-center'>
-                  <Image src={artist?.img?.url} className='mb-3' roundedCircle style={{ maxWidth: '360px' }} />
+                  <Image src={artist?.img?.url} className='mb-3' roundedCircle style={{ maxWidth: '360px' }} alt={`${artist?.firstName}'s photo'`} />
                   <div className="mb-4 text-start">
                      <h4>Genre</h4>
                      {artist.meta?.genre?.map((i: any, key: any) => (
