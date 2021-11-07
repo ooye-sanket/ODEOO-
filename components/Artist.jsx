@@ -12,9 +12,9 @@ export const Artist = ({ img, name, categories, link,pro }) => {
 			>
 				PRO
 			</Badge>}
-			<Card.Body>
+			<Card.Body className="d-flex flex-column">
 				<Card.Title>{name}</Card.Title>
-				<Card.Text>
+				<Card.Text className="tags">
 					{categories?.map((i, key) => (
 						<Badge key={key} bg="secondary" className="me-1">
 							{i}

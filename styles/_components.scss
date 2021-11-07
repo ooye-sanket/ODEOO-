@@ -40,12 +40,22 @@
 .artist-card {
 	cursor: pointer;
 	max-width: 16rem;
+	min-height: 27rem;
+	max-height: 27rem;
 	// // box-shadow: 0 0 0 rgba(76, 78, 189, 0.75);
 	// box-shadow: 0.5em 0.5em 0 rgba(76, 78, 189, 0.75);
 	// transition: 0.3s ease-in-out;
 	// &:hover {
 	// 	box-shadow: 0.5em 0.5em 0 rgba(255, 124, 26, 0.75);
 	// }
+	.tags{
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		display: -webkit-box;
+		text-overflow: ellipsis;
+		flex-grow: 1;
+	}
 }
 .ct-toast {
 	border-radius: 1.2em !important;
