@@ -15,7 +15,7 @@ const Inquiry = () => {
    const router = useRouter()
    const { loading, user, loginShow, setLoginShow }: any = useContext(Context);
    const [step, setStep] = useState(1)
-   const { data: artist }: any = useFetch(`/artists/${router.query?.artist}`, { });
+   const { data: artist }: any = useFetch(`/artists/${router.query?.artist}`, {});
 
 
    const initialValues = {
@@ -77,7 +77,7 @@ const Inquiry = () => {
                initialValues={initialValues}
                validationSchema={validationSchema}
                onSubmit={postInquiry}
-               validateOnBlur
+
             >
                {({ values, errors, touched, isSubmitting }) => (
                   <FormikForm className='d-block my-auto'>

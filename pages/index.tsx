@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Container, Row, Col, Card, Button, Badge, Spinner } from 'react-bootstrap';
 import { Artist } from '../components'
 import { useContext, useEffect, useState } from 'react';
@@ -23,7 +24,8 @@ const Home = () => {
 						<Col xs={{ span: 12, order: 'last' }} lg='6'>
 							<h1 className='display-5'>The Ultimate Platform For All Local Artists</h1>
 							<p className='text-muted'>We are team of Talented artists making your event memorable.</p>
-							<Button className='mb-1 me-2' >Post Inquiry</Button>
+							<Link href="/inquiry">
+								<Button className='mb-1 me-2' >Post Inquiry</Button></Link>
 							<Button className='mb-1 me-1' variant='outline-dark' onClick={() => {
 								cogoToast.success('Hello', { position: 'bottom-center' })
 							}}>Learn More</Button>
